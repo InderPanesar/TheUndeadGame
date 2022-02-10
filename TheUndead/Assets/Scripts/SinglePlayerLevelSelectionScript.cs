@@ -17,8 +17,11 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        level1Button.onClick.AddListener(Level1ButtonClick);
+        //Make sure cursor is visible and not locked.
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
+        level1Button.onClick.AddListener(Level1ButtonClick);
         backButton.onClick.AddListener(BackButtonClick);
     }
 
@@ -29,7 +32,7 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
 
     void Level1ButtonClick()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadSceneAsync("Level1");
     }
 
     // Update is called once per frame
