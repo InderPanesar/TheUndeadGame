@@ -30,9 +30,26 @@ public class PlayerMovementScript : MonoBehaviour
     PlayerState state = PlayerState.idle;
     bool hasJumped = false;
 
+    bool setupScores = false;
+
 
     void Start()
     {
+        if(setupScores == false)
+        {
+            SetupScores();
+        }
+    }
+
+    void SetupScores()
+    {
+        PlayerPrefs.SetInt("level1score", 0);
+        PlayerPrefs.SetInt("level2score", 0);
+        PlayerPrefs.SetInt("level3score", 0);
+        PlayerPrefs.SetInt("level4score", 0);
+        PlayerPrefs.SetInt("level5score", 0);
+        PlayerPrefs.Save();
+        setupScores = true;
     }
 
     void Update()
