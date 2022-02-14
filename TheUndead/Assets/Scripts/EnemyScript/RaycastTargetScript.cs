@@ -30,6 +30,8 @@ public class RaycastTargetScript : MonoBehaviour
         int score = PlayerPrefs.GetInt("level1score");
         score++;
         PlayerPrefs.SetInt("level1score", score);
+        PlayerPrefs.Save();
+
         scoreText.text = "Player Score: " + score;
     }
 }
