@@ -232,3 +232,4 @@ Received Import Request.
   path: Assets/Scripts/PlayerScripts/PlayerMovementScript.cs
   artifactKey: Guid(4c41bafde4108f248ba3074e7ab886ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/Scripts/PlayerScripts/PlayerMovementScript.cs using Guid(4c41bafde4108f248ba3074e7ab886ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '78840b0a76dd1908d96cc952d097b0a9') in 0.004497 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
