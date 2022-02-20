@@ -1,3 +1,4 @@
+using LootLocker.Requests;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,18 @@ public class MainMenuScript : MonoBehaviour
         multiPlayerButton.onClick.AddListener(MultiPlayerButtonClick);
         settingsButton.onClick.AddListener(SettingsButtonClick);
         exitButton.onClick.AddListener(ExitButtonClick);
+
+        LootLockerSDKManager.StartSession("Player", (response) =>
+        {
+            if (response.success)
+            {
+                Debug.Log("Success");
+            }
+            else
+            {
+                Debug.Log("Failed");
+            }
+        });
 
     }
 
