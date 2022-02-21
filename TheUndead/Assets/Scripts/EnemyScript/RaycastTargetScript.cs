@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using LootLocker.Requests;
 using Random = System.Random;
+using UnityEngine.AI;
 
 public class RaycastTargetScript : MonoBehaviour
 {
@@ -13,8 +14,17 @@ public class RaycastTargetScript : MonoBehaviour
     public Text scoreText;
     public int ScoreLimit;
 
-    public void Start()
+    private Vector3 initialPosition;
+
+    public NavMeshAgent agent;
+    public GameObject player;
+    
+
+
+
+    public void Update()
     {
+        agent.destination = player.transform.position;
     }
 
     public void SubmitScoreToLeaderboard(float time)
