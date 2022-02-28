@@ -1,12 +1,13 @@
 {
   "dependencies": {
     "com.lootlocker.lootlockersdk": {
-      "version": "file:C:/Users/Inder/Documents/GitHub/TheUndeadGame/unity-sdk-main",
+      "version": "https://github.com/LootLocker/unity-sdk.git",
       "depth": 0,
-      "source": "local",
+      "source": "git",
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "2.0.0"
-      }
+      },
+      "hash": "66b0f6b7343c09fc31b36e7bf8dc6cffcc8e01a5"
     },
     "com.unity.collab-proxy": {
       "version": "1.5.7",
