@@ -57,7 +57,7 @@ public class MainMenuScript : MonoBehaviour
 
     void SettingsButtonClick()
     {
-        //ToDo: Add SettingsButton Click
+        SceneManager.LoadSceneAsync("SettingsPage");
     }
 
     void ExitButtonClick()
