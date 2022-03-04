@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunScript : MonoBehaviour
+public class GunScript : MonoBehaviourPunCallbacks
 {
     public float damage = 1f;
     public float bulletRange = 100f;
@@ -14,6 +15,12 @@ public class GunScript : MonoBehaviour
     public GameObject impactEffect;
 
     public AudioSource machineGunNoiseEnds;
+    public GameObject player;
+
+    public bool isSinglePlayerOverride = false;
+
+    private PhotonView view;
+
 
 
     private float nextGunFireTime = 0f;
@@ -22,13 +29,28 @@ public class GunScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        view = player.GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (view == null && isSinglePlayerOverride)
+        {
+            ShootHandler();
+        }
+        else
+        {
+            if (view.IsMine)
+            {
+                ShootHandler();
+            }
+        }
 
+
+    }
+    private void ShootHandler()
+    {
         if (Input.GetButton("Fire1") && Time.time >= nextGunFireTime)
         {
             nextGunFireTime = Time.time + 1f / fireRate;
@@ -61,7 +83,7 @@ public class GunScript : MonoBehaviour
             RaycastTargetScript target = hit.transform.GetComponent<RaycastTargetScript>();
             if(target != null)
             {
-                target.takeDamage(damage);
+                target.takeDamage(damage, isSinglePlayerOverride);
             }
 
             GameObject impactEffectInstance = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));

@@ -1,6 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using LootLocker.Requests;
+using System;
+using Photon.Realtime;
 
 enum PlayerState
 {
@@ -10,7 +16,7 @@ enum PlayerState
     in_air,
 }
 
-public class PlayerMovementScript : MonoBehaviour
+public class PlayerMovementScript : MonoBehaviourPunCallbacks
 {
     public CharacterController controller;
     public float playerSpeed = 12f;
@@ -18,10 +24,13 @@ public class PlayerMovementScript : MonoBehaviour
     public float worldGravity = -19;
     public AudioSource walkingAudioSource;
     public AudioSource runningAudioSource;
+    public Camera camera;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    public bool isSinglePlayerOverride = false;
+
 
     Vector3 playerVelocity;
     float playerSpeedMultipler = 1f;
@@ -32,12 +41,93 @@ public class PlayerMovementScript : MonoBehaviour
 
     bool setupScores = false;
 
+    private PhotonView view;
+    private Text scoreText;
+
+    private int playerScore = 0;
+
+    public void UpdateScore()
+    {
+        if(isSinglePlayerOverride)
+        {
+            increaseScore();
+        }
+        else
+        {
+            view.RPC("increaseScore", RpcTarget.AllBuffered);
+        }
+    }
+
+    [PunRPC]
+    private void increaseScore()
+    {
+        this.playerScore++;
+        if(scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
+
+        scoreText.text = "Player Score: " + playerScore;
+        if (playerScore == 6)
+        {
+            CompleteLevel();
+        }
+    }
+
+
+    private void CompleteLevel()
+    {
+        if(isSinglePlayerOverride)
+        {
+            //ToDo: Update with new string when implemented.
+            PlayerPrefs.SetFloat("levelCompleteTime", Time.timeSinceLevelLoad);
+            SubmitScoreToLeaderboard(Time.timeSinceLevelLoad);
+            PlayerPrefs.SetString("currentLevel", "Level1");
+            PlayerPrefs.Save();
+            SceneManager.LoadSceneAsync("GameWinScene");
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync("MultiplayerEndingLevel");
+
+        }
+
+
+
+    }
+
+
+    public void SubmitScoreToLeaderboard(float time)
+    {
+        int timeInt = (int)Math.Round(time);
+        System.Random rand = new System.Random();
+        int userID = rand.Next(100000, 999999999);
+        LootLockerSDKManager.SubmitScore(userID.ToString(), timeInt, "1643", (response) =>
+        {
+            if (response.success)
+            { }
+            else
+            { }
+        });
+    }
+
 
     void Start()
     {
-        if(setupScores == false)
+        scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
+
+        if (setupScores == false)
         {
             SetupScores();
+        }
+        view = GetComponent<PhotonView>();
+        if(view == null && isSinglePlayerOverride)
+        {
+            camera.enabled = true;
+        }
+        else
+        {
+            if (view.IsMine)
+            {
+                camera.enabled = true;
+            }
         }
     }
 
@@ -50,11 +140,25 @@ public class PlayerMovementScript : MonoBehaviour
         PlayerPrefs.SetInt("level5score", 0);
         PlayerPrefs.Save();
         setupScores = true;
+
+
     }
 
     void Update()
     {
-        PlayerMovementHandler();
+        if (view == null && isSinglePlayerOverride)
+        {
+            PlayerMovementHandler();
+        }
+        else
+        {
+            if (view.IsMine)
+            {
+                PlayerMovementHandler();
+            }
+        }
+
+
     }
     
     void PlayerMovementHandler()
@@ -149,14 +253,14 @@ public class PlayerMovementScript : MonoBehaviour
         if(isGrounded() && PlayerIsInputting() && !walkingAudioSource.isPlaying && !runningAudioSource.isPlaying && playerSpeedMultipler == 2f)
         {
             runningAudioSource.Play();
-            runningAudioSource.volume = Random.Range(0.8f, 1.0f);
-            runningAudioSource.pitch = Random.Range(0.8f, 1.0f);
+            runningAudioSource.volume = UnityEngine.Random.Range(0.8f, 1.0f);
+            runningAudioSource.pitch = UnityEngine.Random.Range(0.8f, 1.0f);
         }
         else if(isGrounded() && PlayerIsInputting() && !walkingAudioSource.isPlaying && !runningAudioSource.isPlaying)
         {
             walkingAudioSource.Play();
-            walkingAudioSource.volume = Random.Range(0.8f, 1.0f);
-            walkingAudioSource.pitch = Random.Range(0.8f, 1.0f);
+            walkingAudioSource.volume = UnityEngine.Random.Range(0.8f, 1.0f);
+            walkingAudioSource.pitch = UnityEngine.Random.Range(0.8f, 1.0f);
         }
     }
 
@@ -164,7 +268,6 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (Input.GetKeyDown("escape")) Cursor.lockState = CursorLockMode.None;
     }
-
 
 
 }

@@ -47,7 +47,7 @@ public class SettingsScript : MonoBehaviour
             }
         }
 
-        resolutionUpButton.onClick.AddListener((delegate { ResolutionButtonUpClick(); }));
+        resolutionUpButton.onClick.AddListener(delegate { ResolutionButtonUpClick(); });
         resolutionDownButton.onClick.AddListener((delegate { ResolutionButtonDownClick(); }));
         windowedDownButton.onClick.AddListener((delegate { WindowDownButtonClick(); }));
         windowedUpButton.onClick.AddListener((delegate { WindowUpButtonClick(); }));

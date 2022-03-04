@@ -52,7 +52,7 @@ public class MainMenuScript : MonoBehaviour
 
     void MultiPlayerButtonClick()
     {
-        //ToDo: Add MultiplayerButton Click
+        SceneManager.LoadSceneAsync("LoadingScene");
     }
 
     void SettingsButtonClick()

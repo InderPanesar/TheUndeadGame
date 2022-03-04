@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,10 @@ public class PlayerRotationScript : MonoBehaviour
     public float playerMouseSensitivity = 100f;
     public Transform playerBody;
     public Transform gunBody;
+    public GameObject player;
+    private PhotonView view;
+    public bool isSinglePlayerOverride = false;
+
 
     float xRotation = 0f;
 
@@ -15,12 +20,23 @@ public class PlayerRotationScript : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        view = player.GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerRotationHandler();
+        if (view == null && isSinglePlayerOverride)
+        {
+            PlayerRotationHandler();
+        }
+        else
+        {
+            if (view.IsMine)
+            {
+                PlayerRotationHandler();
+            }
+        }
     }
 
     void PlayerRotationHandler()

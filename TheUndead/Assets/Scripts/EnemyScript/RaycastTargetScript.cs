@@ -5,82 +5,96 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using LootLocker.Requests;
-using Random = System.Random;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class RaycastTargetScript : MonoBehaviour
+public class RaycastTargetScript : MonoBehaviourPunCallbacks
 {
     public float health = 50f;
-    public Text scoreText;
+    private Text scoreText;
     public int ScoreLimit;
 
     private Vector3 initialPosition;
 
     public NavMeshAgent agent;
-    public GameObject player;
-    
+    private GameObject[] players;
+    private PhotonView view;
+
+
+    private void Start()
+    {
+        players = GameObject.FindGameObjectsWithTag("Player");
+        view = GetComponent<PhotonView>();
+    }
+
 
 
 
     public void Update()
     {
-        agent.destination = player.transform.position;
-    }
-
-    public void SubmitScoreToLeaderboard(float time)
-    {
-        int timeInt = (int)Math.Round(time);
-        Random rand = new Random();
-        int userID = rand.Next(100000, 999999999);
-        LootLockerSDKManager.SubmitScore(userID.ToString(), timeInt, "1643", (response) =>
-        {
-            if (response.success)
+        int[] values = new int[players.Length];
+        foreach (GameObject player in players) {
+            float dist = Vector3.Distance(agent.transform.position, player.transform.position);
+            if(dist < 50)
             {
-                Debug.Log("Leaderboard Score Added");
+                agent.destination =  player.transform.position;
             }
             else
             {
-                Debug.Log("Leaderboard Score Not Added");
+                agent.destination = agent.transform.position;
             }
-        });
-    }
-
-
-    public void takeDamage(float damageValue)
-    {
-        health -= damageValue;
-        if(health <= 0)
-        {
-            Die();
+            print(dist);
         }
     }
 
-    private void Die()
+
+
+
+    public void takeDamage(float damageValue, bool isSinglePlayer)
+    {
+
+        health -= damageValue;
+        if (isSinglePlayer)
+        {
+            if (this.health <= 0)
+            {
+                DieSinglePlayer();
+            }
+        }
+        else
+        {
+            if (this.health <= 0)
+            {
+                photonView.RPC("Die", RpcTarget.MasterClient);
+            }
+        }
+
+    }
+
+    [PunRPC]
+    public void Die()
+    {
+        PhotonNetwork.Destroy(view);
+
+        foreach (GameObject player in players)
+        {
+            PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
+            movementScript.UpdateScore();
+
+        }
+    }
+
+    public void DieSinglePlayer()
     {
         Destroy(gameObject);
-        UpdateScore();
-    }
 
-    private void UpdateScore()
-    {
-        int score = PlayerPrefs.GetInt("level1score");
-        score++;
-        PlayerPrefs.SetInt("level1score", score);
-        PlayerPrefs.Save();
-        scoreText.text = "Player Score: " + score;
-        if (score == ScoreLimit)
+        foreach (GameObject player in players)
         {
-            CompleteLevel();
+            PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
+            movementScript.UpdateScore();
+
         }
     }
 
-    private void CompleteLevel()
-    {
-        //ToDo: Update with new string when implemented.
-        PlayerPrefs.SetFloat("levelCompleteTime", Time.timeSinceLevelLoad);
-        SubmitScoreToLeaderboard(Time.timeSinceLevelLoad);
-        PlayerPrefs.SetString("currentLevel", "Level1");
-        PlayerPrefs.Save();
-        SceneManager.LoadSceneAsync("GameWinScene");
-    }
+
 }
