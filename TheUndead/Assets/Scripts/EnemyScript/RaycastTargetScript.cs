@@ -26,7 +26,7 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         view = GetComponent<PhotonView>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
 
     }
 
@@ -35,18 +35,17 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
 
     public void Update()
     {
-        int[] values = new int[players.Length];
         foreach (GameObject player in players) {
             float dist = Vector3.Distance(agent.transform.position, player.transform.position);
             if(dist < 50)
             {
                 agent.destination =  player.transform.position;
-                //animator.SetFloat(Animator.StringToHash("walkingSpeed"), 10);
+                animator.SetFloat(Animator.StringToHash("walkingSpeed"), 10);
             }
             else
             {
                 agent.destination = agent.transform.position;
-                //animator.SetFloat(Animator.StringToHash("walkingSpeed"), 0);
+                animator.SetFloat(Animator.StringToHash("walkingSpeed"), 0);
             }
             print(dist);
         }
