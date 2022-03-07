@@ -19,12 +19,15 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
     public NavMeshAgent agent;
     private GameObject[] players;
     private PhotonView view;
+    private Animator animator;
 
 
     private void Start()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         view = GetComponent<PhotonView>();
+        //animator = GetComponent<Animator>();
+
     }
 
 
@@ -38,10 +41,12 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
             if(dist < 50)
             {
                 agent.destination =  player.transform.position;
+                //animator.SetFloat(Animator.StringToHash("walkingSpeed"), 10);
             }
             else
             {
                 agent.destination = agent.transform.position;
+                //animator.SetFloat(Animator.StringToHash("walkingSpeed"), 0);
             }
             print(dist);
         }
