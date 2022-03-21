@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  attackRange: 8
   ScoreLimit: 6
   agent: {fileID: 86858984}
 --- !u!95 &86858986
@@ -4982,6 +4983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  attackRange: 8
   ScoreLimit: 6
   agent: {fileID: 1256293280}
 --- !u!95 &1256293282
@@ -6542,6 +6544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  attackRange: 8
   ScoreLimit: 6
   agent: {fileID: 1609403262}
 --- !u!95 &1609403264
@@ -6621,6 +6624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  attackRange: 8
   ScoreLimit: 6
   agent: {fileID: 1612715238}
 --- !u!95 &1612715240
@@ -7295,6 +7299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  attackRange: 8
   ScoreLimit: 6
   agent: {fileID: 1805378390}
 --- !u!95 &1805378392
@@ -8475,6 +8480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  attackRange: 8
   ScoreLimit: 6
   agent: {fileID: 2082541825}
 --- !u!195 &2082541825

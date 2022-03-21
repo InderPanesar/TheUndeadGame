@@ -11,6 +11,7 @@ using Photon.Pun;
 public class RaycastTargetScript : MonoBehaviourPunCallbacks
 {
     public float health = 50f;
+    public float attackRange = 8f;
     private Text scoreText;
     public int ScoreLimit;
 
@@ -41,13 +42,23 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
             {
                 agent.destination =  player.transform.position;
                 animator.SetFloat(Animator.StringToHash("walkingSpeed"), 10);
+                if (dist <= attackRange)
+                {
+                    animator.SetLayerWeight(animator.GetLayerIndex("Movement Layer"), 0);
+                    animator.SetBool(Animator.StringToHash("attack"), true);
+                }
+                else
+                {
+                    animator.SetLayerWeight(animator.GetLayerIndex("Movement Layer"), 1);
+                    animator.SetBool(Animator.StringToHash("attack"), false);
+
+                }
             }
             else
             {
                 agent.destination = agent.transform.position;
                 animator.SetFloat(Animator.StringToHash("walkingSpeed"), 0);
             }
-            print(dist);
         }
     }
 
