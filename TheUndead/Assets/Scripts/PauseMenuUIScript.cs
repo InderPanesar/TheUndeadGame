@@ -71,7 +71,7 @@ public class PauseMenuUIScript : MonoBehaviour
     void LevelSelectionButtonClick()
     {
         Resume();
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadSceneAsync("SinglePlayerLevelSelection");
     }
 
     void ExitButtonClick()
