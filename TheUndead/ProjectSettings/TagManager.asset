@@ -7,6 +7,7 @@ TagManager:
   - Player Score Text HUD
   - Enemies
   - UI Health Bar
+  - Waypoints
   layers:
   - Default
   - TransparentFX

@@ -17,8 +17,12 @@ public class SpawnPlayersScript : MonoBehaviour
     {
         Vector3 randomPosition = new Vector3(Random.Range(minimumXValue, maximumXValue), 1, Random.Range(minimumZValue, maximumZValue));
         Debug.Log(randomPosition);
-        PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
-        if(PhotonNetwork.IsMasterClient)
+        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+        player.GetComponent<PhotonView>().Owner.TagObject = player;
+
+        
+        //Spawn Enemies for Main Client
+        if (PhotonNetwork.IsMasterClient)
         {
             for (int i = 0; i < 6; i++)
             {
@@ -27,6 +31,8 @@ public class SpawnPlayersScript : MonoBehaviour
                 PhotonNetwork.Instantiate(enemyPrefab.name, randomPosition, Quaternion.identity);
             }
         }
+        
+        
 
     }
 
