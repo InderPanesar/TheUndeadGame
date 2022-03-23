@@ -42,8 +42,57 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
     private PhotonView view;
     private Text scoreText;
+    private Image playerHealthBar;
+
 
     private int playerScore = 0;
+    private float maxHealth = 100;
+    private float currentHealth = 100;
+
+
+
+
+    public void TakeDamage()
+    {
+
+        if (isSinglePlayerOverride)
+        {
+            updateHealthBar();
+        }
+        else
+        {
+            view.RPC("updateHealthBar", RpcTarget.AllBuffered);
+        }
+    }
+
+    [PunRPC]
+    private void updateHealthBar()
+    {
+        if (playerHealthBar == null) playerHealthBar = (Image)GameObject.FindWithTag("UI Health Bar").GetComponent<Image>() as Image;
+
+
+        currentHealth -= 10;
+
+
+
+        float values = (currentHealth / maxHealth);
+
+        playerHealthBar.fillAmount = values;
+
+
+        if (currentHealth <= 0)
+        {
+            if(isSinglePlayerOverride)
+            {
+                SceneManager.LoadSceneAsync("GameLostScene");
+
+            }
+            else
+            {
+                SceneManager.LoadSceneAsync("MultiplayerLevelYouDied");
+            }
+        }
+    }
 
     public void UpdateScore()
     {

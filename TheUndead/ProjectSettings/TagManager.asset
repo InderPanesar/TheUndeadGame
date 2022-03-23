@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Player Score Text HUD
   - Enemies
+  - UI Health Bar
   layers:
   - Default
   - TransparentFX
