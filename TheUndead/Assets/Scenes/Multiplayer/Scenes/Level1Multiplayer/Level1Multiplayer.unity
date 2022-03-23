@@ -4819,7 +4819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6442037570064913236, guid: 699db7feb50542643a835d3c9245c71f, type: 3}
-  enemyPrefab: {fileID: 6393305836409397647, guid: f95667e3b4aa3384ab4d0e95245b283d, type: 3}
+  enemyPrefab: {fileID: 3955265464365330621, guid: e936d5ae52921934197889cd21d051a3, type: 3}
   minimumXValue: 281
   maximumXValue: 168
   minimumZValue: 302

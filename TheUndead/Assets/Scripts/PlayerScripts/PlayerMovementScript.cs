@@ -4,7 +4,6 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using LootLocker.Requests;
 using System;
 using Photon.Realtime;
 
@@ -79,7 +78,6 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
             //ToDo: Update with new string when implemented.
             PlayerPrefs.SetFloat("levelCompleteTime", Time.timeSinceLevelLoad);
             SubmitScoreToLeaderboard(Time.timeSinceLevelLoad);
-            PlayerPrefs.SetString("currentLevel", "Level1");
             PlayerPrefs.Save();
             SceneManager.LoadSceneAsync("GameWinScene");
         }
@@ -96,16 +94,12 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
     public void SubmitScoreToLeaderboard(float time)
     {
-        int timeInt = (int)Math.Round(time);
-        System.Random rand = new System.Random();
-        int userID = rand.Next(100000, 999999999);
-        LootLockerSDKManager.SubmitScore(userID.ToString(), timeInt, "1643", (response) =>
+        String level = PlayerPrefs.GetString("currentLevel", "");
+        if(level != "")
         {
-            if (response.success)
-            { }
-            else
-            { }
-        });
+            StartCoroutine(LeaderboardScript.Instance.AddScore(time, level));
+        }
+
     }
 
 
