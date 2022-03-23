@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using LootLocker.Requests;
 using UnityEngine.AI;
 using Photon.Pun;
 
