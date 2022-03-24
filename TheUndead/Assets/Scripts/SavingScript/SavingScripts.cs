@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -13,6 +12,8 @@ public struct EnemySaveInformation
     public Vector3 position;
     public Quaternion rotation;
     public float health;
+    public int randomSpot;
+    public bool isEnabled;
 }
 
 [Serializable]
@@ -44,6 +45,7 @@ public class SavingScripts
 
     private SavingScripts() { }
     private static SavingScripts instance { get; set; }
+
     public static SavingScripts Instance
     {
         get
@@ -55,6 +57,7 @@ public class SavingScripts
             return instance;
         }
     }
+
 
 
     public void SaveLevel()
@@ -71,7 +74,10 @@ public class SavingScripts
         playerSaveInformation.position = player.transform.position;
         playerSaveInformation.rotation = player.transform.rotation;
 
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemies");
+        GameObject enemyContainer = GameObject.FindGameObjectWithTag("EnemyContainer");
+        EnemiesContainerScript containerScript = enemyContainer.GetComponent<EnemiesContainerScript>();
+
+        GameObject[] enemies = containerScript.enemies;
 
         MultipleEnemiesSaveInformation multipleEnemiesSaveInformation = new MultipleEnemiesSaveInformation();
         multipleEnemiesSaveInformation.enemies = new List<EnemySaveInformation>();
@@ -84,9 +90,13 @@ public class SavingScripts
             enemySaveInformation.health = targetScript.health;
             enemySaveInformation.position = enemy.transform.position;
             enemySaveInformation.rotation = enemy.transform.rotation;
+            enemySaveInformation.randomSpot = targetScript.RandomSpot;
+            enemySaveInformation.isEnabled = targetScript.isEnabled;
             multipleEnemiesSaveInformation.enemies.Add(enemySaveInformation);
 
         }
+
+
 
         LevelSaveInformation levelSaveInformation = new LevelSaveInformation();
         levelSaveInformation.enemies = multipleEnemiesSaveInformation;
@@ -104,6 +114,9 @@ public class SavingScripts
             xmlDocument.Load(stream); 
             xmlDocument.Save(fileName);
         }
+
+        Debug.Log("SAVED GAME!");
+
     }
 
     public void LoadSaveFile()
@@ -129,6 +142,23 @@ public class SavingScripts
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
         movementScript.LoadSaveFile(levelSaveInformation.player);
+
+
+        GameObject enemyContainer = GameObject.FindGameObjectWithTag("EnemyContainer");
+        EnemiesContainerScript containerScript = enemyContainer.GetComponent<EnemiesContainerScript>();
+
+        GameObject[] enemies = containerScript.enemies;
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            GameObject enemy = enemies[i];
+            RaycastTargetScript targetScript = enemy.GetComponent<RaycastTargetScript>();
+
+            targetScript.LoadSaveFile(levelSaveInformation.enemies.enemies[i]);
+        }
+
+
+        Debug.Log("LOADED GAME!");
 
 
     }

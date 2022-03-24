@@ -275,15 +275,15 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         inGameMenu();
     }
 
+    //ToDo: Look Into Potentially Moving into the PauseMenu
     void isSaveHit()
     {
         if(Input.GetKeyDown(KeyCode.Z)) {
             SavingScripts.Instance.SaveLevel();
         }
-        else if (Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.M))
         {
             SavingScripts.Instance.LoadSaveFile();
-            Debug.Log(transform.position);
         }
     }
 
@@ -359,8 +359,6 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
     public void LoadSaveFile(PlayerSaveInformation saveInformation)
     {
-        Debug.Log("HIT!");
-
         this.currentHealth = saveInformation.currentHealth;
         this.maxHealth = saveInformation.maxHealth;
         updateHealthUI();

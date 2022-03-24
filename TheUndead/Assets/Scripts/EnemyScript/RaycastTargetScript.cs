@@ -28,8 +28,24 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
     public Transform[] locationsToMoveTo;
     private int randomSpot;
 
+    public int RandomSpot
+    {
+        get
+        {
+            return randomSpot;
+        }
+    }
+
     private float idleTime = 5;
     private float currentIdleTime;
+
+    public bool isEnabled
+    {
+        get
+        {
+            return gameObject.activeInHierarchy;
+        }
+    }
 
     private void Start()
     {
@@ -176,13 +192,12 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
         {
             PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
             movementScript.UpdateScore();
-
         }
     }
 
     public void DieSinglePlayer()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
 
         foreach (GameObject player in players)
         {
@@ -194,9 +209,18 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
 
     public void LoadSaveFile(EnemySaveInformation saveInformation)
     {
-        this.health = saveInformation.health;
-        transform.position = saveInformation.position;
-        transform.rotation = saveInformation.rotation;
+        bool value = saveInformation.isEnabled;
+        gameObject.SetActive(value);
+
+        if(value)
+        {
+            this.health = saveInformation.health;
+            transform.position = saveInformation.position;
+            transform.rotation = saveInformation.rotation;
+
+            int randomSpot = saveInformation.randomSpot;
+            agent.destination = locationsToMoveTo[randomSpot].position;
+        }
 
     }
 
