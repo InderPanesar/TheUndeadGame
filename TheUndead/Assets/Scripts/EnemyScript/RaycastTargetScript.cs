@@ -89,9 +89,7 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
             if (dist < 15)
             {
                 agent.destination = player.transform.position;
-                Debug.Log("PlayerPosition: " + player.transform.position);
                 animator.SetFloat(Animator.StringToHash("walkingSpeed"), 10);
-                Debug.Log("PlayerPosition: " + agent.destination);
                 if (dist <= attackRange)
                 {
                     animator.SetLayerWeight(animator.GetLayerIndex("Movement Layer"), 0);
@@ -192,6 +190,14 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
             movementScript.UpdateScore();
 
         }
+    }
+
+    public void LoadSaveFile(EnemySaveInformation saveInformation)
+    {
+        this.health = saveInformation.health;
+        transform.position = saveInformation.position;
+        transform.rotation = saveInformation.rotation;
+
     }
 
 

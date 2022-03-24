@@ -49,7 +49,20 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
     private float maxHealth = 100;
     private float currentHealth = 100;
 
+    public int PlayerScore
+    {
+        get { return playerScore; }
+    }
 
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+    }
+
+    public float CurrentHealth
+    {
+        get { return currentHealth; }
+    }
 
 
     public void TakeDamage()
@@ -117,6 +130,20 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         {
             CompleteLevel();
         }
+    }
+
+    private void updateScoreUI()
+    {
+        if (scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
+        scoreText.text = "Player Score: " + playerScore;
+    }
+
+    private void updateHealthUI()
+    {
+        if (playerHealthBar == null) playerHealthBar = (Image)GameObject.FindWithTag("UI Health Bar").GetComponent<Image>() as Image;
+
+        float values = (currentHealth / maxHealth);
+        playerHealthBar.fillAmount = values;
     }
 
 
@@ -206,8 +233,10 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
     
     void PlayerMovementHandler()
     {
+        isSaveHit();
 
-        if(isGrounded() && playerVelocity.y < 0)
+
+        if (isGrounded() && playerVelocity.y < 0)
         {
             playerVelocity.y = -2f;
         }
@@ -222,6 +251,8 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         }
 
 
+
+
         float horizontalValue = Input.GetAxis("Horizontal") * Time.deltaTime;
         float verticalValue = Input.GetAxis("Vertical") * Time.deltaTime;
 
@@ -232,14 +263,28 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         if (move.magnitude > 0) PlayerSoundHandler();
         controller.Move(move * (playerSpeed * playerSpeedMultipler));
 
+
         //Player Jump handler 
         PlayerJumpHandler();
 
         //Add Gravity to the player
         playerVelocity.y += worldGravity * Time.deltaTime;
+
         controller.Move(playerVelocity * Time.deltaTime);
 
         inGameMenu();
+    }
+
+    void isSaveHit()
+    {
+        if(Input.GetKeyDown(KeyCode.Z)) {
+            SavingScripts.Instance.SaveLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            SavingScripts.Instance.LoadSaveFile();
+            Debug.Log(transform.position);
+        }
     }
 
     void PlayerJumpHandler()
@@ -312,5 +357,21 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown("escape")) Cursor.lockState = CursorLockMode.None;
     }
 
+    public void LoadSaveFile(PlayerSaveInformation saveInformation)
+    {
+        Debug.Log("HIT!");
+
+        this.currentHealth = saveInformation.currentHealth;
+        this.maxHealth = saveInformation.maxHealth;
+        updateHealthUI();
+        this.playerScore = saveInformation.playerScore;
+        updateScoreUI();
+
+        var delta = saveInformation.position - transform.position;
+        controller.Move(delta);
+
+        transform.rotation = saveInformation.rotation;
+
+    }
 
 }
