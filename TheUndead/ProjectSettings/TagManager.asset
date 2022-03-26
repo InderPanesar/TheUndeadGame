@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Player Score Text HUD
+  - Enemies
+  - UI Health Bar
+  - Waypoints
+  - EnemyContainer
   layers:
   - Default
   - TransparentFX

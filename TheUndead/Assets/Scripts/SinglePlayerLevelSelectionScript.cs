@@ -1,4 +1,3 @@
-using LootLocker.Requests;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,39 +55,33 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         levelTitle.text = "Level 1";
         uiImage.texture = level1Image;
         currentLevelSelected = "Level1";
-        ShowScoreList(1643);
+        ShowScoreList(currentLevelSelected);
     }
 
-    public void ShowScoreList(int id)
+    private void ShowScoreList(String tableName)
     {
-        LootLockerSDKManager.GetScoreList(id, maxScore, (response) =>
+        StartCoroutine(LeaderboardScript.Instance.GetHighScores(tableName, maxScore, DisplayLeaderboard));
+    }
+
+    private void DisplayLeaderboard(List<HighScoreResult> scores)
+    {
+        int values = scores.Count;
+        if (scores.Count > maxScore) values = maxScore;
+
+        for (int i = 0; i < values; i++)
         {
-            if (response.success)
-            {
-                
-                LootLockerLeaderboardMember[] scores = response.items;
-                int values = scores.Length;
-                if (scores.Length > maxScore) values = maxScore;
-                for(int i = 0; i < values; i++)
-                {
-                    TimeSpan ts = TimeSpan.FromSeconds(scores[i].score);
-                    leaderboardTexts[i].text = scores[i].rank + " - " + ts.ToString("mm':'ss");
-                }
+            TimeSpan ts = TimeSpan.FromSeconds(scores[i].score);
+            leaderboardTexts[i].text = (i + 1) + " - " + ts.ToString("mm':'ss");
+        }
 
-                if(scores.Length < maxScore)
-                {
-                    int temp = maxScore - scores.Length;
-                    for (int i = scores.Length; i < maxScore; i++)
-                    {
-                        leaderboardTexts[i].text = "n/a" + " - " + "00:00";
-                    }
-                }
-            }
-            else
+        if (scores.Count < maxScore)
+        {
+            int temp = maxScore - scores.Count;
+            for (int i = scores.Count; i < maxScore; i++)
             {
-
+                leaderboardTexts[i].text = "n/a" + " - " + "00:00";
             }
-        });
+        }
     }
 
     void BackButtonClick()
@@ -102,34 +95,34 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         levelTitle.text = "Level 1";
         uiImage.texture = level1Image;
         currentLevelSelected = "Level1";
-        ShowScoreList(1643);
+        ShowScoreList(currentLevelSelected);
     }
 
     void Level2ButtonClick()
     {
-        playButton.interactable = false;
+        playButton.interactable = true;
         levelTitle.text = "Level 2";
         uiImage.texture = level2Image;
         currentLevelSelected = "Level2";
-        ShowScoreList(1644);
+        ShowScoreList(currentLevelSelected);
     }
 
     void Level3ButtonClick()
     {
-        playButton.interactable = false;
+        playButton.interactable = true;
         levelTitle.text = "Level 3";
         uiImage.texture = level3Image;
         currentLevelSelected = "Level3";
-        ShowScoreList(1645);
+        ShowScoreList(currentLevelSelected);
     }
 
     void Level4ButtonClick()
     {
-        playButton.interactable = false;
+        playButton.interactable = true;
         levelTitle.text = "Level 4";
         uiImage.texture = level4Image;
         currentLevelSelected = "Level4";
-        ShowScoreList(1646);
+        ShowScoreList(currentLevelSelected);
     }
 
     void Level5ButtonClick()
@@ -138,11 +131,12 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         levelTitle.text = "Level 5";
         uiImage.texture = level5Image;
         currentLevelSelected = "Level5";
-        ShowScoreList(1647);
+        ShowScoreList(currentLevelSelected);
     }
 
     void OnPlayClick()
     {
+        PlayerPrefs.SetString("currentLevel", currentLevelSelected);
         SceneManager.LoadSceneAsync(currentLevelSelected);
     }
 

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,7 +28,7 @@ public class GameWinScript : MonoBehaviour
 
     void RetryButtonClicked()
     {
-        String level = PlayerPrefs.GetString("currentLevel");
+        string level = PlayerPrefs.GetString("currentLevel");
         SceneManager.LoadSceneAsync(level);
     }
 

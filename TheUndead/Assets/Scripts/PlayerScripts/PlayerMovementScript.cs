@@ -4,7 +4,6 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using LootLocker.Requests;
 using System;
 using Photon.Realtime;
 
@@ -43,8 +42,70 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
     private PhotonView view;
     private Text scoreText;
+    private Image playerHealthBar;
+
 
     private int playerScore = 0;
+    private float maxHealth = 100;
+    private float currentHealth = 100;
+
+    public int PlayerScore
+    {
+        get { return playerScore; }
+    }
+
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+    }
+
+    public float CurrentHealth
+    {
+        get { return currentHealth; }
+    }
+
+
+    public void TakeDamage()
+    {
+
+        if (isSinglePlayerOverride)
+        {
+            updateHealthBar();
+        }
+        else
+        {
+            view.RPC("updateHealthBar", RpcTarget.AllBuffered);
+        }
+    }
+
+    [PunRPC]
+    private void updateHealthBar()
+    {
+        if (playerHealthBar == null) playerHealthBar = (Image)GameObject.FindWithTag("UI Health Bar").GetComponent<Image>() as Image;
+
+
+        currentHealth -= 10;
+
+
+
+        float values = (currentHealth / maxHealth);
+
+        playerHealthBar.fillAmount = values;
+
+
+        if (currentHealth <= 0)
+        {
+            if(isSinglePlayerOverride)
+            {
+                SceneManager.LoadSceneAsync("GameLostScene");
+
+            }
+            else
+            {
+                SceneManager.LoadSceneAsync("MultiplayerLevelYouDied");
+            }
+        }
+    }
 
     public void UpdateScore()
     {
@@ -62,16 +123,82 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
     private void increaseScore()
     {
         this.playerScore++;
-        if(scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
+        if (scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
 
         scoreText.text = "Player Score: " + playerScore;
-        if (playerScore == 6)
+
+
+
+        if (isSinglePlayerOverride)
         {
-            CompleteLevel();
+            CheckIfScoreLimitMet();
+        }
+        else
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                CheckIfScoreLimitMet();
+            }
         }
     }
 
+    private void CheckIfScoreLimitMet()
+    {
 
+        GameObject[] enemies;
+        if (isSinglePlayerOverride)
+        {
+            bool allAreDead = true;
+
+            GameObject enemyContainer = GameObject.FindGameObjectWithTag("EnemyContainer");
+            EnemiesContainerScript containerScript = enemyContainer.GetComponent<EnemiesContainerScript>();
+            enemies = containerScript.enemies;
+
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                GameObject enemy = enemies[i];
+                RaycastTargetScript targetScript = enemy.GetComponent<RaycastTargetScript>();
+                if (targetScript.isEnabled)
+                {
+                    Debug.Log("HIT!");
+                    allAreDead = false;
+                    break;
+                }
+            }
+
+            if (allAreDead)
+            {
+                CompleteLevel();
+            }
+        }
+        else
+        {
+            enemies = GameObject.FindGameObjectsWithTag("Enemies");
+
+            if(enemies.Length == 0)
+            {
+                view.RPC("CompleteLevel", RpcTarget.AllBuffered);
+            }
+        }
+
+
+    }
+
+    private void updateScoreUI()
+    {
+        if (scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
+        scoreText.text = "Player Score: " + playerScore;
+    }
+
+    private void updateHealthUI()
+    {
+        if (playerHealthBar == null) playerHealthBar = (Image)GameObject.FindWithTag("UI Health Bar").GetComponent<Image>() as Image;
+
+        float values = (currentHealth / maxHealth);
+        playerHealthBar.fillAmount = values;
+    }
+
+    [PunRPC]
     private void CompleteLevel()
     {
         if(isSinglePlayerOverride)
@@ -79,7 +206,6 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
             //ToDo: Update with new string when implemented.
             PlayerPrefs.SetFloat("levelCompleteTime", Time.timeSinceLevelLoad);
             SubmitScoreToLeaderboard(Time.timeSinceLevelLoad);
-            PlayerPrefs.SetString("currentLevel", "Level1");
             PlayerPrefs.Save();
             SceneManager.LoadSceneAsync("GameWinScene");
         }
@@ -96,16 +222,12 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
     public void SubmitScoreToLeaderboard(float time)
     {
-        int timeInt = (int)Math.Round(time);
-        System.Random rand = new System.Random();
-        int userID = rand.Next(100000, 999999999);
-        LootLockerSDKManager.SubmitScore(userID.ToString(), timeInt, "1643", (response) =>
+        String level = PlayerPrefs.GetString("currentLevel", "");
+        if(level != "")
         {
-            if (response.success)
-            { }
-            else
-            { }
-        });
+            StartCoroutine(LeaderboardScript.Instance.AddScore(time, level));
+        }
+
     }
 
 
@@ -163,8 +285,10 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
     
     void PlayerMovementHandler()
     {
+        isSaveHit();
 
-        if(isGrounded() && playerVelocity.y < 0)
+
+        if (isGrounded() && playerVelocity.y < 0)
         {
             playerVelocity.y = -2f;
         }
@@ -179,6 +303,8 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         }
 
 
+
+
         float horizontalValue = Input.GetAxis("Horizontal") * Time.deltaTime;
         float verticalValue = Input.GetAxis("Vertical") * Time.deltaTime;
 
@@ -189,14 +315,28 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         if (move.magnitude > 0) PlayerSoundHandler();
         controller.Move(move * (playerSpeed * playerSpeedMultipler));
 
+
         //Player Jump handler 
         PlayerJumpHandler();
 
         //Add Gravity to the player
         playerVelocity.y += worldGravity * Time.deltaTime;
+
         controller.Move(playerVelocity * Time.deltaTime);
 
         inGameMenu();
+    }
+
+    //ToDo: Look Into Potentially Moving into the PauseMenu
+    void isSaveHit()
+    {
+        if(Input.GetKeyDown(KeyCode.Z)) {
+            SavingScripts.Instance.SaveLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.M))
+        {
+            SavingScripts.Instance.LoadSaveFile();
+        }
     }
 
     void PlayerJumpHandler()
@@ -269,5 +409,19 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown("escape")) Cursor.lockState = CursorLockMode.None;
     }
 
+    public void LoadSaveFile(PlayerSaveInformation saveInformation)
+    {
+        this.currentHealth = saveInformation.currentHealth;
+        this.maxHealth = saveInformation.maxHealth;
+        updateHealthUI();
+        this.playerScore = saveInformation.playerScore;
+        updateScoreUI();
+
+        var delta = saveInformation.position - transform.position;
+        controller.Move(delta);
+
+        transform.rotation = saveInformation.rotation;
+
+    }
 
 }

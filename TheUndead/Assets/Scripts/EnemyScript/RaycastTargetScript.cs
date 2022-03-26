@@ -4,27 +4,74 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using LootLocker.Requests;
 using UnityEngine.AI;
 using Photon.Pun;
 
+enum RayCastTargetState
+{
+    idle,
+    chase,
+    attack,
+    patrol,
+}
 public class RaycastTargetScript : MonoBehaviourPunCallbacks
 {
     public float health = 50f;
-    private Text scoreText;
-    public int ScoreLimit;
-
-    private Vector3 initialPosition;
-
+    public float attackRange = 3f;
     public NavMeshAgent agent;
     private GameObject[] players;
     private PhotonView view;
+    private Animator animator;
+    private RayCastTargetState state;
 
+    public Transform[] locationsToMoveTo;
+    private int randomSpot;
+
+    public int RandomSpot
+    {
+        get
+        {
+            return randomSpot;
+        }
+    }
+
+    private float idleTime = 5;
+    private float currentIdleTime;
+
+    public bool isEnabled
+    {
+        get
+        {
+            return gameObject.activeInHierarchy;
+        }
+    }
 
     private void Start()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
         view = GetComponent<PhotonView>();
+        animator = GetComponent<Animator>();
+
+        if (locationsToMoveTo != null)
+        {
+            randomSpot = UnityEngine.Random.Range(0, locationsToMoveTo.Length);
+            currentIdleTime = idleTime;
+        }
+
+        if (locationsToMoveTo.Length == 0 || locationsToMoveTo == null)
+        {
+            GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Waypoints");
+            locationsToMoveTo = new Transform[waypoints.Length];
+
+            for (int i = 0; i < waypoints.Length; i++)
+            {
+                locationsToMoveTo[i] = waypoints[i].transform;
+            }
+
+            randomSpot = UnityEngine.Random.Range(0, locationsToMoveTo.Length);
+
+            currentIdleTime = idleTime;
+        }
+
     }
 
 
@@ -32,18 +79,79 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
 
     public void Update()
     {
-        int[] values = new int[players.Length];
-        foreach (GameObject player in players) {
-            float dist = Vector3.Distance(agent.transform.position, player.transform.position);
-            if(dist < 50)
+        if(photonView == null)
+        {
+            targetMovement();
+        }
+        else
+        {
+            if(PhotonNetwork.IsMasterClient)
             {
-                agent.destination =  player.transform.position;
+                targetMovement();
+            }
+        }
+    }
+
+    private void targetMovement()
+    {
+        players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
+        {
+            float dist = Vector3.Distance(agent.transform.position, player.transform.position);
+            if (dist < 15)
+            {
+                agent.destination = player.transform.position;
+                animator.SetFloat(Animator.StringToHash("walkingSpeed"), 10);
+                if (dist <= attackRange)
+                {
+                    animator.SetLayerWeight(animator.GetLayerIndex("Movement Layer"), 0);
+                    animator.SetFloat(Animator.StringToHash("walkingSpeed"), 0);
+                    animator.SetBool(Animator.StringToHash("attack"), true);
+                    agent.isStopped = true;
+                    state = RayCastTargetState.attack;
+                }
+                else
+                {
+                    animator.SetLayerWeight(animator.GetLayerIndex("Movement Layer"), 1);
+                    animator.SetFloat(Animator.StringToHash("walkingSpeed"), 10);
+                    animator.SetBool(Animator.StringToHash("attack"), false);
+                    agent.isStopped = false;
+                    state = RayCastTargetState.chase;
+                }
+                break;
             }
             else
             {
-                agent.destination = agent.transform.position;
+                if (locationsToMoveTo != null && locationsToMoveTo.Length > 0)
+                {
+
+                    agent.destination = locationsToMoveTo[randomSpot].position;
+                    animator.SetFloat(Animator.StringToHash("walkingSpeed"), 10);
+                    if (Vector3.Distance(transform.position, locationsToMoveTo[randomSpot].position) < 0.2f)
+                    {
+                        if (currentIdleTime <= 0)
+                        {
+                            randomSpot = UnityEngine.Random.Range(0, locationsToMoveTo.Length);
+                            currentIdleTime = idleTime;
+                            state = RayCastTargetState.patrol;
+                        }
+                        else
+                        {
+                            currentIdleTime -= Time.deltaTime;
+                            animator.SetFloat(Animator.StringToHash("walkingSpeed"), 0);
+                            state = RayCastTargetState.idle;
+                        }
+
+                    }
+                }
+                else
+                {
+                    agent.destination = agent.transform.position;
+                    animator.SetFloat(Animator.StringToHash("walkingSpeed"), 0);
+                    state = RayCastTargetState.idle;
+                }
+
             }
-            print(dist);
         }
     }
 
@@ -80,20 +188,35 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
         {
             PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
             movementScript.UpdateScore();
-
         }
     }
 
     public void DieSinglePlayer()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
 
         foreach (GameObject player in players)
         {
             PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
             movementScript.UpdateScore();
-
         }
+    }
+
+    public void LoadSaveFile(EnemySaveInformation saveInformation)
+    {
+        bool value = saveInformation.isEnabled;
+        gameObject.SetActive(value);
+
+        if(value)
+        {
+            this.health = saveInformation.health;
+            transform.position = saveInformation.position;
+            transform.rotation = saveInformation.rotation;
+
+            int randomSpot = saveInformation.randomSpot;
+            agent.destination = locationsToMoveTo[randomSpot].position;
+        }
+
     }
 
 
