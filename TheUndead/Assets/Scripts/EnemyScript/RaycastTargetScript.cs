@@ -18,7 +18,6 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
 {
     public float health = 50f;
     public float attackRange = 3f;
-    public int ScoreLimit;
     public NavMeshAgent agent;
     private GameObject[] players;
     private PhotonView view;
@@ -68,10 +67,7 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
                 locationsToMoveTo[i] = waypoints[i].transform;
             }
 
-            Debug.Log(locationsToMoveTo.Length);
-
             randomSpot = UnityEngine.Random.Range(0, locationsToMoveTo.Length);
-            Debug.Log(randomSpot);
 
             currentIdleTime = idleTime;
         }
@@ -203,7 +199,6 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
         {
             PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
             movementScript.UpdateScore();
-
         }
     }
 

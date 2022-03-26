@@ -123,13 +123,65 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
     private void increaseScore()
     {
         this.playerScore++;
-        if(scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
+        if (scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
 
         scoreText.text = "Player Score: " + playerScore;
-        if (playerScore == 6)
+
+
+
+        if (isSinglePlayerOverride)
         {
-            CompleteLevel();
+            CheckIfScoreLimitMet();
         }
+        else
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                CheckIfScoreLimitMet();
+            }
+        }
+    }
+
+    private void CheckIfScoreLimitMet()
+    {
+
+        GameObject[] enemies;
+        if (isSinglePlayerOverride)
+        {
+            bool allAreDead = true;
+
+            GameObject enemyContainer = GameObject.FindGameObjectWithTag("EnemyContainer");
+            EnemiesContainerScript containerScript = enemyContainer.GetComponent<EnemiesContainerScript>();
+            enemies = containerScript.enemies;
+
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                GameObject enemy = enemies[i];
+                RaycastTargetScript targetScript = enemy.GetComponent<RaycastTargetScript>();
+                if (targetScript.isEnabled)
+                {
+                    Debug.Log("HIT!");
+                    allAreDead = false;
+                    break;
+                }
+            }
+
+            if (allAreDead)
+            {
+                CompleteLevel();
+            }
+        }
+        else
+        {
+            enemies = GameObject.FindGameObjectsWithTag("Enemies");
+
+            if(enemies.Length == 0)
+            {
+                view.RPC("CompleteLevel", RpcTarget.AllBuffered);
+            }
+        }
+
+
     }
 
     private void updateScoreUI()
@@ -146,7 +198,7 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         playerHealthBar.fillAmount = values;
     }
 
-
+    [PunRPC]
     private void CompleteLevel()
     {
         if(isSinglePlayerOverride)

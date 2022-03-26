@@ -1530,7 +1530,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   attackRange: 3
-  ScoreLimit: 6
   agent: {fileID: 4189057019238978253}
   locationsToMoveTo: []
 --- !u!114 &627956070511404807
