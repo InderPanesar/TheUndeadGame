@@ -127,7 +127,7 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
 
     void Level5ButtonClick()
     {
-        playButton.interactable = false;
+        playButton.interactable = true;
         levelTitle.text = "Level 5";
         uiImage.texture = level5Image;
         currentLevelSelected = "Level5";

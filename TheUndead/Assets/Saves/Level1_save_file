@@ -2,152 +2,152 @@
 <LevelSaveInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <player>
     <position>
-      <x>243.1726</x>
+      <x>247.789764</x>
       <y>1.97999966</y>
-      <z>323.984833</z>
+      <z>363.1411</z>
     </position>
     <rotation>
       <x>0</x>
-      <y>0.3715654</y>
+      <y>-0.9958056</y>
       <z>0</z>
-      <w>-0.928406835</w>
+      <w>0.09149448</w>
       <eulerAngles>
-        <x>-0</x>
-        <y>316.3756</y>
+        <x>0</x>
+        <y>190.499176</y>
         <z>0</z>
       </eulerAngles>
     </rotation>
     <playerScore>5</playerScore>
     <maxHealth>100</maxHealth>
-    <currentHealth>80</currentHealth>
+    <currentHealth>100</currentHealth>
   </player>
   <enemies>
     <enemies>
       <EnemySaveInformation>
         <position>
-          <x>245.271</x>
+          <x>243.97403</x>
           <y>0.101298332</y>
-          <z>385.6187</z>
+          <z>385.7309</z>
         </position>
         <rotation>
           <x>-0</x>
-          <y>-0.639508069</y>
+          <y>-0.6595505</y>
           <z>-0</z>
-          <w>0.7687844</w>
+          <w>0.7516603</w>
           <eulerAngles>
             <x>-0</x>
-            <y>280.489716</y>
+            <y>277.4688</y>
             <z>0</z>
           </eulerAngles>
         </rotation>
-        <health>50</health>
+        <health>0</health>
         <randomSpot>1</randomSpot>
         <isEnabled>false</isEnabled>
       </EnemySaveInformation>
       <EnemySaveInformation>
         <position>
-          <x>292.949036</x>
+          <x>285.2233</x>
           <y>0.101298332</y>
-          <z>385.514923</z>
+          <z>401.656036</z>
         </position>
         <rotation>
           <x>-0</x>
-          <y>-0.647140563</y>
+          <y>-0.313519657</y>
           <z>-0</z>
-          <w>0.762370765</w>
+          <w>0.949581742</w>
           <eulerAngles>
             <x>-0</x>
-            <y>279.3473</y>
+            <y>323.457062</y>
             <z>0</z>
           </eulerAngles>
         </rotation>
-        <health>50</health>
-        <randomSpot>0</randomSpot>
+        <health>0</health>
+        <randomSpot>3</randomSpot>
         <isEnabled>false</isEnabled>
       </EnemySaveInformation>
       <EnemySaveInformation>
         <position>
-          <x>248.024277</x>
+          <x>248.028748</x>
           <y>0.101298332</y>
-          <z>437.5819</z>
+          <z>467.0868</z>
         </position>
         <rotation>
           <x>-0</x>
-          <y>-0.937729239</y>
+          <y>-0.0336073563</y>
           <z>-0</z>
-          <w>0.347367167</w>
+          <w>0.9994352</w>
           <eulerAngles>
             <x>-0</x>
-            <y>220.652725</y>
+            <y>356.148163</y>
+            <z>0</z>
+          </eulerAngles>
+        </rotation>
+        <health>0</health>
+        <randomSpot>6</randomSpot>
+        <isEnabled>false</isEnabled>
+      </EnemySaveInformation>
+      <EnemySaveInformation>
+        <position>
+          <x>248.882828</x>
+          <y>0.101298332</y>
+          <z>339.214447</z>
+        </position>
+        <rotation>
+          <x>-0</x>
+          <y>-0.0118485009</y>
+          <z>-0</z>
+          <w>0.999929845</w>
+          <eulerAngles>
+            <x>-0</x>
+            <y>358.642242</y>
+            <z>0</z>
+          </eulerAngles>
+        </rotation>
+        <health>0</health>
+        <randomSpot>6</randomSpot>
+        <isEnabled>false</isEnabled>
+      </EnemySaveInformation>
+      <EnemySaveInformation>
+        <position>
+          <x>207.044983</x>
+          <y>0.101298332</y>
+          <z>376.154755</z>
+        </position>
+        <rotation>
+          <x>-0</x>
+          <y>0.982325733</y>
+          <z>-0</z>
+          <w>0.187179372</w>
+          <eulerAngles>
+            <x>-0</x>
+            <y>158.423569</y>
+            <z>-0</z>
+          </eulerAngles>
+        </rotation>
+        <health>0</health>
+        <randomSpot>4</randomSpot>
+        <isEnabled>false</isEnabled>
+      </EnemySaveInformation>
+      <EnemySaveInformation>
+        <position>
+          <x>230.465668</x>
+          <y>0.101298332</y>
+          <z>321.86264</z>
+        </position>
+        <rotation>
+          <x>-0</x>
+          <y>-0.7706891</y>
+          <z>-0</z>
+          <w>0.6372114</w>
+          <eulerAngles>
+            <x>-0</x>
+            <y>259.1684</y>
             <z>0</z>
           </eulerAngles>
         </rotation>
         <health>50</health>
         <randomSpot>5</randomSpot>
-        <isEnabled>false</isEnabled>
-      </EnemySaveInformation>
-      <EnemySaveInformation>
-        <position>
-          <x>225.60202</x>
-          <y>0.101298332</y>
-          <z>358.76416</z>
-        </position>
-        <rotation>
-          <x>-0</x>
-          <y>0.02612978</y>
-          <z>-0</z>
-          <w>-0.9996586</w>
-          <eulerAngles>
-            <x>0</x>
-            <y>357.0054</y>
-            <z>0</z>
-          </eulerAngles>
-        </rotation>
-        <health>30</health>
-        <randomSpot>0</randomSpot>
         <isEnabled>true</isEnabled>
-      </EnemySaveInformation>
-      <EnemySaveInformation>
-        <position>
-          <x>199.691177</x>
-          <y>0.101298332</y>
-          <z>387.370422</z>
-        </position>
-        <rotation>
-          <x>-0</x>
-          <y>-0.480350465</y>
-          <z>-0</z>
-          <w>0.8770767</w>
-          <eulerAngles>
-            <x>-0</x>
-            <y>302.5834</y>
-            <z>0</z>
-          </eulerAngles>
-        </rotation>
-        <health>50</health>
-        <randomSpot>1</randomSpot>
-        <isEnabled>false</isEnabled>
-      </EnemySaveInformation>
-      <EnemySaveInformation>
-        <position>
-          <x>289.8081</x>
-          <y>0.232811928</y>
-          <z>337.698151</z>
-        </position>
-        <rotation>
-          <x>-0</x>
-          <y>0.0290016886</y>
-          <z>-0</z>
-          <w>0.9995794</w>
-          <eulerAngles>
-            <x>-0</x>
-            <y>3.32381463</y>
-            <z>-0</z>
-          </eulerAngles>
-        </rotation>
-        <health>50</health>
-        <randomSpot>7</randomSpot>
-        <isEnabled>false</isEnabled>
       </EnemySaveInformation>
     </enemies>
   </enemies>
