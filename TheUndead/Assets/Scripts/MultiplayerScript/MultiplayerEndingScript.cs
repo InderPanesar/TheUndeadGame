@@ -16,12 +16,19 @@ public class MultiplayerEndingScript : MonoBehaviourPunCallbacks
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         mainMenuButton.onClick.AddListener(MainMenuButtonClick);
+
+        PhotonNetwork.AutomaticallySyncScene = false;
+
     }
 
     void MainMenuButtonClick()
     {
-        PhotonNetwork.LeaveRoom();
-        SceneManager.LoadSceneAsync("MultiplayerLevelSelection");
+        if (PhotonNetwork.CurrentRoom != null)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 
 }

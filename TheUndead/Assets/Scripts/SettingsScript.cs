@@ -24,23 +24,27 @@ public class SettingsScript : MonoBehaviour
     private string[] values = new string[] { "Windowed", "Fullscreen" };
     private bool isWindowed = true;
 
+    private Resolution _resolution;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        Screen.SetResolution(1920, 1080, true);
+
         Resolution[] resolutions = Screen.resolutions;
         volumeSlider.value = AudioListener.volume;
         volumeSlider.onValueChanged.AddListener(delegate { UpdateVol(); });
 
         Resolution resolution = Screen.currentResolution;
-        resolutionText.text = resolution.width + " X " + resolution.height;
+        resolutionText.text = Screen.width + " X " + Screen.height + " | " + resolution.refreshRate + "hz";
         Debug.Log(resolutionText.text);
 
 
-        // Print the resolutions
         for (int i = 0; i < resolutions.Length; i++)
         {
-            if (resolutions[i].height == resolution.height && resolutions[i].width == resolution.width)
+            if (resolutions[i].height == Screen.height && resolutions[i].width == Screen.width && resolutions[i].refreshRate == resolution.refreshRate)
             {
                 resolutionIndex = i;
                 break;
@@ -52,6 +56,7 @@ public class SettingsScript : MonoBehaviour
         windowedDownButton.onClick.AddListener((delegate { WindowDownButtonClick(); }));
         windowedUpButton.onClick.AddListener((delegate { WindowUpButtonClick(); }));
         backButton.onClick.AddListener((delegate { BackButtonClick(); }));
+        submitButton.onClick.AddListener((delegate { SubmitValues(); }));
 
         FullScreenMode mode = Screen.fullScreenMode;
         if (mode != FullScreenMode.Windowed)
@@ -65,15 +70,19 @@ public class SettingsScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (resolutionIndex <= 0)
+        {
+            resolutionDownButton.interactable = false;
+        }
     }
 
     public void ResolutionButtonUpClick()
     {
         Resolution[] resolutions = Screen.resolutions;
         resolutionIndex++;
-        resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height;
-        Screen.SetResolution(resolutions[resolutionIndex].height, resolutions[resolutionIndex].width, true);
-        if(resolutionIndex >= (resolutions.Length-1)) {
+        _resolution = resolutions[resolutionIndex];
+        resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height + " | " + resolutions[resolutionIndex].refreshRate + "hz";
+        if (resolutionIndex >= (resolutions.Length-1)) {
             resolutionUpButton.interactable = false;
         }
         if (resolutionIndex > 0)
@@ -87,12 +96,10 @@ public class SettingsScript : MonoBehaviour
     {
         Resolution[] resolutions = Screen.resolutions;
         resolutionIndex--;
-        resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height;
-        Screen.SetResolution(resolutions[resolutionIndex].height, resolutions[resolutionIndex].width, true);
-        if (resolutionIndex <= 0)
-        {
-            resolutionDownButton.interactable = false;
-        }
+        _resolution = resolutions[resolutionIndex];
+
+        resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height + " | " + resolutions[resolutionIndex].refreshRate + "hz";
+
         if (resolutionIndex < (resolutions.Length - 1))
         {
             resolutionUpButton.interactable = true;
@@ -135,4 +142,10 @@ public class SettingsScript : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("MainMenu");
     }
+
+    void SubmitValues()
+    {
+        Screen.SetResolution(_resolution.width, _resolution.height, !isWindowed, _resolution.refreshRate);
+    }
 }
+
