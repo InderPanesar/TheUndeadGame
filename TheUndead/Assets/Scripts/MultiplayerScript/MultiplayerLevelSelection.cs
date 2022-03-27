@@ -1,12 +1,11 @@
+using Photon.Pun;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SinglePlayerLevelSelectionScript : MonoBehaviour
+public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
 {
 
     [SerializeField] private Button level1Button;
@@ -22,9 +21,6 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
     [SerializeField] private Texture level4Image;
     [SerializeField] private Texture level5Image;
 
-
-    [SerializeField] private TextMeshProUGUI[] leaderboardTexts;
-    private int maxScore = 5;
 
     [SerializeField] private Button playButton;
     [SerializeField] private TextMeshProUGUI levelTitle;
@@ -54,48 +50,25 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         playButton.interactable = true;
         levelTitle.text = "Level 1";
         uiImage.texture = level1Image;
-        currentLevelSelected = "Level1";
-        ShowScoreList(currentLevelSelected);
+        currentLevelSelected = "MPLevel1";
     }
 
-    private void ShowScoreList(String tableName)
-    {
-        StartCoroutine(LeaderboardScript.Instance.GetHighScores(tableName, maxScore, DisplayLeaderboard));
-    }
-
-    private void DisplayLeaderboard(List<HighScoreResult> scores)
-    {
-        int values = scores.Count;
-        if (scores.Count > maxScore) values = maxScore;
-
-        for (int i = 0; i < values; i++)
-        {
-            TimeSpan ts = TimeSpan.FromSeconds(scores[i].score);
-            leaderboardTexts[i].text = (i + 1) + " - " + ts.ToString("mm':'ss");
-        }
-
-        if (scores.Count < maxScore)
-        {
-            int temp = maxScore - scores.Count;
-            for (int i = scores.Count; i < maxScore; i++)
-            {
-                leaderboardTexts[i].text = "n/a" + " - " + "00:00";
-            }
-        }
-    }
 
     void BackButtonClick()
     {
+        PhotonNetwork.LeaveLobby();
+        PhotonNetwork.Disconnect();
         SceneManager.LoadSceneAsync("MainMenu");
     }
+
 
     void Level1ButtonClick()
     {
         playButton.interactable = true;
         levelTitle.text = "Level 1";
         uiImage.texture = level1Image;
-        currentLevelSelected = "Level1";
-        ShowScoreList(currentLevelSelected);
+        currentLevelSelected = "MPLevel1";
+
     }
 
     void Level2ButtonClick()
@@ -103,8 +76,8 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         playButton.interactable = true;
         levelTitle.text = "Level 2";
         uiImage.texture = level2Image;
-        currentLevelSelected = "Level2";
-        ShowScoreList(currentLevelSelected);
+        currentLevelSelected = "MPLevel2";
+
     }
 
     void Level3ButtonClick()
@@ -112,8 +85,7 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         playButton.interactable = true;
         levelTitle.text = "Level 3";
         uiImage.texture = level3Image;
-        currentLevelSelected = "Level3";
-        ShowScoreList(currentLevelSelected);
+        currentLevelSelected = "MPLevel3";
     }
 
     void Level4ButtonClick()
@@ -121,8 +93,7 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         playButton.interactable = true;
         levelTitle.text = "Level 4";
         uiImage.texture = level4Image;
-        currentLevelSelected = "Level4";
-        ShowScoreList(currentLevelSelected);
+        currentLevelSelected = "MPLevel4";
     }
 
     void Level5ButtonClick()
@@ -130,19 +101,13 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         playButton.interactable = true;
         levelTitle.text = "Level 5";
         uiImage.texture = level5Image;
-        currentLevelSelected = "Level5";
-        ShowScoreList(currentLevelSelected);
+        currentLevelSelected = "MPLevel5";
     }
 
     void OnPlayClick()
     {
-        PlayerPrefs.SetString("currentLevel", currentLevelSelected);
-        SceneManager.LoadSceneAsync(currentLevelSelected);
+        PlayerPrefs.SetString("MultiplayerLevel", currentLevelSelected);
+        SceneManager.LoadSceneAsync("LobbyScene");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

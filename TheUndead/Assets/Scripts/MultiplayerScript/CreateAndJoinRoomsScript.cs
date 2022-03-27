@@ -12,28 +12,61 @@ public class CreateAndJoinRoomsScript : MonoBehaviourPunCallbacks
 
     public Button createRoomButton;
     public Button joinRoomButton;
+    public Button backButton;
+
 
     void Start()
     {
         createRoomButton.onClick.AddListener(delegate { CreateRoom(); });
         joinRoomButton.onClick.AddListener(delegate { JoinRoom(); });
+        backButton.onClick.AddListener(delegate { BackButton(); });
+
     }
 
 
     void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(createRoom.text);
+        string value = PlayerPrefs.GetString("MultiplayerLevel", "Unknown");
+
+        PhotonNetwork.CreateRoom(value + "_" + createRoom.text);
     }
 
     void JoinRoom()
     {
-        print(joinRoom.text);
-        PhotonNetwork.JoinRoom(joinRoom.text);
+        string value = PlayerPrefs.GetString("MultiplayerLevel", "Unknown");
+
+        PhotonNetwork.JoinRoom(value + "_" + joinRoom.text);
+    }
+
+    void BackButton()
+    {
+        SceneManager.LoadSceneAsync("MultiplayerLevelSelection");
     }
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("Level1Multiplayer");
+        string value = PlayerPrefs.GetString("MultiplayerLevel", "Unknown");
+        if(value == "MPLevel1")
+        {
+            PhotonNetwork.LoadLevel("Level1Multiplayer");
+        }
+        else if(value == "MPLevel2")
+        {
+            PhotonNetwork.LoadLevel("Level2Multiplayer");
+        }
+        else if (value == "MPLevel3")
+        {
+            PhotonNetwork.LoadLevel("Level3Multiplayer");
+        }
+        else if (value == "MPLevel4")
+        {
+            PhotonNetwork.LoadLevel("Level4Multiplayer");
+        }
+        else if (value == "MPLevel5")
+        {
+            PhotonNetwork.LoadLevel("Level5Multiplayer");
+        }
+
     }
 
 }
