@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -31,20 +32,15 @@ public class SettingsScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Screen.SetResolution(1920, 1080, true);
-
-        Resolution[] resolutions = Screen.resolutions;
+        Resolution[] resolutions = Screen.resolutions.Where(resolution => resolution.refreshRate == 60).ToArray();
         volumeSlider.value = AudioListener.volume;
         volumeSlider.onValueChanged.AddListener(delegate { UpdateVol(); });
 
-        Resolution resolution = Screen.currentResolution;
-        resolutionText.text = Screen.width + " X " + Screen.height + " | " + resolution.refreshRate + "hz";
-        Debug.Log(resolutionText.text);
-
+        resolutionText.text = Screen.width + " X " + Screen.height;
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-            if (resolutions[i].height == Screen.height && resolutions[i].width == Screen.width && resolutions[i].refreshRate == resolution.refreshRate)
+            if (resolutions[i].height == Screen.height && resolutions[i].width == Screen.width)
             {
                 resolutionIndex = i;
                 break;
@@ -78,10 +74,10 @@ public class SettingsScript : MonoBehaviour
 
     public void ResolutionButtonUpClick()
     {
-        Resolution[] resolutions = Screen.resolutions;
+        Resolution[] resolutions = Screen.resolutions.Where(resolution => resolution.refreshRate == 60).ToArray();
         resolutionIndex++;
         _resolution = resolutions[resolutionIndex];
-        resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height + " | " + resolutions[resolutionIndex].refreshRate + "hz";
+        resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height;
         if (resolutionIndex >= (resolutions.Length-1)) {
             resolutionUpButton.interactable = false;
         }
@@ -94,11 +90,11 @@ public class SettingsScript : MonoBehaviour
 
     public void ResolutionButtonDownClick()
     {
-        Resolution[] resolutions = Screen.resolutions;
+        Resolution[] resolutions = Screen.resolutions.Where(resolution => resolution.refreshRate == 60).ToArray();
         resolutionIndex--;
         _resolution = resolutions[resolutionIndex];
 
-        resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height + " | " + resolutions[resolutionIndex].refreshRate + "hz";
+        resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height;
 
         if (resolutionIndex < (resolutions.Length - 1))
         {
@@ -133,8 +129,7 @@ public class SettingsScript : MonoBehaviour
 
     public void UpdateVol()
     {
-        float newVol = AudioListener.volume;
-        newVol = volumeSlider.value;
+        float newVol = volumeSlider.value;
         AudioListener.volume = newVol;
     }
 
@@ -145,7 +140,7 @@ public class SettingsScript : MonoBehaviour
 
     void SubmitValues()
     {
-        Screen.SetResolution(_resolution.width, _resolution.height, !isWindowed, _resolution.refreshRate);
+        Screen.SetResolution(_resolution.width, _resolution.height, !isWindowed);
     }
 }
 
