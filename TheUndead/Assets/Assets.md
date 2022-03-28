@@ -25,6 +25,8 @@
 1. Zombie (Zombie) - https://www.mixamo.com/#/?page=1&query=zombie&type=Character
 2. Zombie Attack Animation (Zombie Swipe Attack) - https://www.mixamo.com/#/?page=1&query=Zombie+Swipe+Attack
 3. Zombie Attack Idle (Zombie Alert Idle) - https://www.mixamo.com/#/?page=1&query=Zombie+Alert+Idle
-3. Zombie Run (Zombie Run) - https://www.mixamo.com/#/?page=1&query=Zombie+Run
+4. Zombie Run (Zombie Run) - https://www.mixamo.com/#/?page=1&query=Zombie+Run
 
+# FONTS
+1. Bebas Neue - Regular https://fonts.google.com/specimen/Bebas+Neue (These fonts are licensed under the Open Font License.)
 
