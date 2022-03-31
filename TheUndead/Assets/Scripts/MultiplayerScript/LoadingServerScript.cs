@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using System;
 
 public class LoadingServerScript : MonoBehaviourPunCallbacks
 {
@@ -19,7 +20,9 @@ public class LoadingServerScript : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        SceneManager.LoadSceneAsync("LobbyScene");
+        SceneManager.LoadSceneAsync("MultiplayerLevelSelection");
     }
+
+
 
 }

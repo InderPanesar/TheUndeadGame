@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GunScript : MonoBehaviourPunCallbacks
 {
@@ -21,15 +22,23 @@ public class GunScript : MonoBehaviourPunCallbacks
 
     private PhotonView view;
 
+    public int reloadTime = 5;
+    public int ammoCapacity = 100;
 
 
     private float nextGunFireTime = 0f;
 
+    private bool isReloading = false;
+    private int currentAmmo;
+    private Text ammoCountText; 
+     
 
     // Start is called before the first frame update
     void Start()
     {
+        ammoCountText = (Text)GameObject.FindWithTag("Player Ammo Text HUD").GetComponent<Text>() as Text;
         view = player.GetComponent<PhotonView>();
+        currentAmmo = ammoCapacity;
     }
 
     // Update is called once per frame
@@ -51,14 +60,15 @@ public class GunScript : MonoBehaviourPunCallbacks
     }
     private void ShootHandler()
     {
-        if (Input.GetButton("Fire1") && Time.time >= nextGunFireTime)
+       
+        if (Input.GetButton("Fire1") && Time.time >= nextGunFireTime && !isReloading)
         {
             nextGunFireTime = Time.time + 1f / fireRate;
             Shoot();
         }
         else
         {
-            if (muzzleFlash.isPlaying && Time.time >= nextGunFireTime)
+            if (muzzleFlash.isPlaying && Time.time >= nextGunFireTime && !isReloading)
             {
                 muzzleFlash.Stop();
             }
@@ -89,7 +99,30 @@ public class GunScript : MonoBehaviourPunCallbacks
             GameObject impactEffectInstance = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactEffectInstance, 0.5f);
         }
+        currentAmmo--;
+        updateText();
+        if (currentAmmo <= 0)
+        {
+            isReloading = true;
+            updateText();
+            muzzleFlash.Stop();
+            StartCoroutine(ReloadTime());
+        }
+    }
 
+    private void updateText()
+    {
+        if(isReloading) ammoCountText.text = "Ammo: Reloading";
+        else ammoCountText.text = "Ammo: " + currentAmmo + "/" + ammoCapacity;
+    }
+
+    IEnumerator ReloadTime()
+    {
+        if (!isReloading) yield break;
+        yield return new WaitForSeconds(reloadTime);
+        isReloading = false;
+        currentAmmo = ammoCapacity;
+        updateText();
     }
 
 }

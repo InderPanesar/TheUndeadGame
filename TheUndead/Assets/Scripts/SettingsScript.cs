@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,23 +25,22 @@ public class SettingsScript : MonoBehaviour
     private string[] values = new string[] { "Windowed", "Fullscreen" };
     private bool isWindowed = true;
 
+    private Resolution _resolution;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        Resolution[] resolutions = Screen.resolutions;
+        Resolution[] resolutions = Screen.resolutions.Where(resolution => resolution.refreshRate == 60).ToArray();
         volumeSlider.value = AudioListener.volume;
         volumeSlider.onValueChanged.AddListener(delegate { UpdateVol(); });
 
-        Resolution resolution = Screen.currentResolution;
-        resolutionText.text = resolution.width + " X " + resolution.height;
-        Debug.Log(resolutionText.text);
+        resolutionText.text = Screen.width + " X " + Screen.height;
 
-
-        // Print the resolutions
         for (int i = 0; i < resolutions.Length; i++)
         {
-            if (resolutions[i].height == resolution.height && resolutions[i].width == resolution.width)
+            if (resolutions[i].height == Screen.height && resolutions[i].width == Screen.width)
             {
                 resolutionIndex = i;
                 break;
@@ -52,6 +52,7 @@ public class SettingsScript : MonoBehaviour
         windowedDownButton.onClick.AddListener((delegate { WindowDownButtonClick(); }));
         windowedUpButton.onClick.AddListener((delegate { WindowUpButtonClick(); }));
         backButton.onClick.AddListener((delegate { BackButtonClick(); }));
+        submitButton.onClick.AddListener((delegate { SubmitValues(); }));
 
         FullScreenMode mode = Screen.fullScreenMode;
         if (mode != FullScreenMode.Windowed)
@@ -65,15 +66,19 @@ public class SettingsScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (resolutionIndex <= 0)
+        {
+            resolutionDownButton.interactable = false;
+        }
     }
 
     public void ResolutionButtonUpClick()
     {
-        Resolution[] resolutions = Screen.resolutions;
+        Resolution[] resolutions = Screen.resolutions.Where(resolution => resolution.refreshRate == 60).ToArray();
         resolutionIndex++;
+        _resolution = resolutions[resolutionIndex];
         resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height;
-        Screen.SetResolution(resolutions[resolutionIndex].height, resolutions[resolutionIndex].width, true);
-        if(resolutionIndex >= (resolutions.Length-1)) {
+        if (resolutionIndex >= (resolutions.Length-1)) {
             resolutionUpButton.interactable = false;
         }
         if (resolutionIndex > 0)
@@ -85,14 +90,12 @@ public class SettingsScript : MonoBehaviour
 
     public void ResolutionButtonDownClick()
     {
-        Resolution[] resolutions = Screen.resolutions;
+        Resolution[] resolutions = Screen.resolutions.Where(resolution => resolution.refreshRate == 60).ToArray();
         resolutionIndex--;
+        _resolution = resolutions[resolutionIndex];
+
         resolutionText.text = resolutions[resolutionIndex].width + " X " + resolutions[resolutionIndex].height;
-        Screen.SetResolution(resolutions[resolutionIndex].height, resolutions[resolutionIndex].width, true);
-        if (resolutionIndex <= 0)
-        {
-            resolutionDownButton.interactable = false;
-        }
+
         if (resolutionIndex < (resolutions.Length - 1))
         {
             resolutionUpButton.interactable = true;
@@ -126,8 +129,7 @@ public class SettingsScript : MonoBehaviour
 
     public void UpdateVol()
     {
-        float newVol = AudioListener.volume;
-        newVol = volumeSlider.value;
+        float newVol = volumeSlider.value;
         AudioListener.volume = newVol;
     }
 
@@ -135,4 +137,10 @@ public class SettingsScript : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("MainMenu");
     }
+
+    void SubmitValues()
+    {
+        Screen.SetResolution(_resolution.width, _resolution.height, !isWindowed);
+    }
 }
+

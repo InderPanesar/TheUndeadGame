@@ -349,6 +349,7 @@ GameObject:
   - component: {fileID: 6442037570064913322}
   - component: {fileID: 6442037570064913320}
   - component: {fileID: -2855739965678477828}
+  - component: {fileID: 5924681196656352153}
   m_Layer: 2
   m_Name: FirstPersonPlayer
   m_TagString: Player
@@ -474,6 +475,22 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &5924681196656352153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6442037570064913236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b05b5611c196344b31b8a1e4cac4fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSinglePlayerOverride: 0
+  playerScore: 0
+  maxHealth: 100
+  currentHealth: 100
 --- !u!1 &6442037570081371500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,13 +1110,13 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 3bb9293946c6b4842ac3979fe40e058b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ba4ba99606f6244f93e0bc706ad240e, type: 3}
---- !u!1 &6442037570122622597 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100002, guid: 5ba4ba99606f6244f93e0bc706ad240e, type: 3}
-  m_PrefabInstance: {fileID: 6442037570122588199}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6442037570122988197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 5ba4ba99606f6244f93e0bc706ad240e, type: 3}
+  m_PrefabInstance: {fileID: 6442037570122588199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6442037570122622597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 5ba4ba99606f6244f93e0bc706ad240e, type: 3}
   m_PrefabInstance: {fileID: 6442037570122588199}
   m_PrefabAsset: {fileID: 0}

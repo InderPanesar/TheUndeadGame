@@ -66,11 +66,12 @@ public class SavingScripts
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
+        PlayerStatsScript statsScript = player.GetComponent<PlayerStatsScript>();
 
         PlayerSaveInformation playerSaveInformation = new PlayerSaveInformation();
-        playerSaveInformation.currentHealth = movementScript.CurrentHealth;
-        playerSaveInformation.playerScore = movementScript.PlayerScore;
-        playerSaveInformation.maxHealth = movementScript.MaxHealth;
+        playerSaveInformation.currentHealth = statsScript.currentHealth;
+        playerSaveInformation.playerScore = statsScript.playerScore;
+        playerSaveInformation.maxHealth = statsScript.maxHealth;
         playerSaveInformation.position = player.transform.position;
         playerSaveInformation.rotation = player.transform.rotation;
 

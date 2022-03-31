@@ -86,7 +86,7 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
 
     void BackButtonClick()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 
     void Level1ButtonClick()
@@ -127,7 +127,7 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
 
     void Level5ButtonClick()
     {
-        playButton.interactable = false;
+        playButton.interactable = true;
         levelTitle.text = "Level 5";
         uiImage.texture = level5Image;
         currentLevelSelected = "Level5";
