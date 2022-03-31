@@ -63,7 +63,7 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         StartCoroutine(LeaderboardScript.Instance.GetHighScores(tableName, maxScore, DisplayLeaderboard));
     }
 
-    private void DisplayLeaderboard(List<HighScoreResult> scores)
+    private void DisplayLeaderboard(List<LeaderboardResult> scores)
     {
         int values = scores.Count;
         if (scores.Count > maxScore) values = maxScore;

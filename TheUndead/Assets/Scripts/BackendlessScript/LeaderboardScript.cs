@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [Serializable]
-public class HighScoreResult
+public class LeaderboardResult
 {
     public float score { get; set; }
 }
@@ -29,13 +29,13 @@ public class LeaderboardScript
         }
     }
 
-    public IEnumerator GetHighScores(string tableName, int maxScore, System.Action<List<HighScoreResult>> callback = null)
+    public IEnumerator GetHighScores(string tableName, int maxScore, System.Action<List<LeaderboardResult>> callback = null)
     {
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get("https://eu-api.backendless.com/E7AD2B56-F5DA-9783-FFD1-CD9846D91500/168B8736-3464-44E8-86F8-635C5C8D9B0F/data/" + tableName))
         {
             webRequest.SetRequestHeader("Content-Type", "application/json");
-            List<HighScoreResult> tempResults = new List<HighScoreResult>();
+            List<LeaderboardResult> tempResults = new List<LeaderboardResult>();
 
             yield return webRequest.SendWebRequest();
 
@@ -49,9 +49,9 @@ public class LeaderboardScript
             }
             else
             {
-                HighScoreResult[] results = JsonConvert.DeserializeObject<HighScoreResult[]>(webRequest.downloadHandler.text);
+                LeaderboardResult[] results = JsonConvert.DeserializeObject<LeaderboardResult[]>(webRequest.downloadHandler.text);
 
-                Array.Sort(results, delegate (HighScoreResult one, HighScoreResult two) { return one.score.CompareTo(two.score); });
+                Array.Sort(results, delegate (LeaderboardResult one, LeaderboardResult two) { return one.score.CompareTo(two.score); });
 
                 for (int i = 0; i < results.Length; i++)
                 {
@@ -73,7 +73,7 @@ public class LeaderboardScript
     {
 
 
-        HighScoreResult result = new HighScoreResult();
+        LeaderboardResult result = new LeaderboardResult();
         result.score = lengthOfTime;
         String value = JsonConvert.SerializeObject(result);
 
