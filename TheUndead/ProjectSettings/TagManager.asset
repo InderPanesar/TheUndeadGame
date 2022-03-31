@@ -9,6 +9,7 @@ TagManager:
   - UI Health Bar
   - Waypoints
   - EnemyContainer
+  - Player Ammo Text HUD
   layers:
   - Default
   - TransparentFX

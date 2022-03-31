@@ -38,207 +38,12 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
     PlayerState state = PlayerState.idle;
     bool hasJumped = false;
 
-    bool setupScores = false;
 
     private PhotonView view;
-    private Text scoreText;
-    private Image playerHealthBar;
-
-
-    private int playerScore = 0;
-    private float maxHealth = 100;
-    private float currentHealth = 100;
-
-    public int PlayerScore
-    {
-        get { return playerScore; }
-    }
-
-    public float MaxHealth
-    {
-        get { return maxHealth; }
-    }
-
-    public float CurrentHealth
-    {
-        get { return currentHealth; }
-    }
-
-
-    public void TakeDamage()
-    {
-
-        if (isSinglePlayerOverride)
-        {
-            updateHealthBar();
-        }
-        else
-        {
-            view.RPC("updateHealthBar", RpcTarget.AllBuffered);
-        }
-    }
-
-    [PunRPC]
-    private void updateHealthBar()
-    {
-        if (playerHealthBar == null) playerHealthBar = (Image)GameObject.FindWithTag("UI Health Bar").GetComponent<Image>() as Image;
-
-
-        currentHealth -= 10;
-
-
-
-        float values = (currentHealth / maxHealth);
-
-        playerHealthBar.fillAmount = values;
-
-
-        if (currentHealth <= 0)
-        {
-            if(isSinglePlayerOverride)
-            {
-                SceneManager.LoadSceneAsync("GameLostScene");
-
-            }
-            else
-            {
-                SceneManager.LoadSceneAsync("MultiplayerLevelYouDied");
-            }
-        }
-    }
-
-    public void UpdateScore()
-    {
-        if(isSinglePlayerOverride)
-        {
-            increaseScore();
-        }
-        else
-        {
-            view.RPC("increaseScore", RpcTarget.AllBuffered);
-        }
-    }
-
-    [PunRPC]
-    private void increaseScore()
-    {
-        this.playerScore++;
-        if (scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
-
-        scoreText.text = "Player Score: " + playerScore;
-
-
-
-        if (isSinglePlayerOverride)
-        {
-            CheckIfScoreLimitMet();
-        }
-        else
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                CheckIfScoreLimitMet();
-            }
-        }
-    }
-
-    private void CheckIfScoreLimitMet()
-    {
-
-        GameObject[] enemies;
-        if (isSinglePlayerOverride)
-        {
-            bool allAreDead = true;
-
-            GameObject enemyContainer = GameObject.FindGameObjectWithTag("EnemyContainer");
-            EnemiesContainerScript containerScript = enemyContainer.GetComponent<EnemiesContainerScript>();
-            enemies = containerScript.enemies;
-
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                GameObject enemy = enemies[i];
-                RaycastTargetScript targetScript = enemy.GetComponent<RaycastTargetScript>();
-                if (targetScript.isEnabled)
-                {
-                    Debug.Log("HIT!");
-                    allAreDead = false;
-                    break;
-                }
-            }
-
-            if (allAreDead)
-            {
-                CompleteLevel();
-            }
-        }
-        else
-        {
-            enemies = GameObject.FindGameObjectsWithTag("Enemies");
-
-            if(enemies.Length == 0)
-            {
-                view.RPC("CompleteLevel", RpcTarget.AllBuffered);
-            }
-        }
-
-
-    }
-
-    private void updateScoreUI()
-    {
-        if (scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
-        scoreText.text = "Player Score: " + playerScore;
-    }
-
-    private void updateHealthUI()
-    {
-        if (playerHealthBar == null) playerHealthBar = (Image)GameObject.FindWithTag("UI Health Bar").GetComponent<Image>() as Image;
-
-        float values = (currentHealth / maxHealth);
-        playerHealthBar.fillAmount = values;
-    }
-
-    [PunRPC]
-    private void CompleteLevel()
-    {
-        if(isSinglePlayerOverride)
-        {
-            //ToDo: Update with new string when implemented.
-            PlayerPrefs.SetFloat("levelCompleteTime", Time.timeSinceLevelLoad);
-            SubmitScoreToLeaderboard(Time.timeSinceLevelLoad);
-            PlayerPrefs.Save();
-            SceneManager.LoadSceneAsync("GameWinScene");
-        }
-        else
-        {
-            SceneManager.LoadSceneAsync("MultiplayerEndingLevel");
-
-        }
-
-
-
-    }
-
-
-    public void SubmitScoreToLeaderboard(float time)
-    {
-        String level = PlayerPrefs.GetString("currentLevel", "");
-        if(level != "")
-        {
-            StartCoroutine(LeaderboardScript.Instance.AddScore(time, level));
-        }
-
-    }
 
 
     void Start()
     {
-        scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
-
-        if (setupScores == false)
-        {
-            SetupScores();
-        }
         view = GetComponent<PhotonView>();
         if(view == null && isSinglePlayerOverride)
         {
@@ -253,18 +58,7 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         }
     }
 
-    void SetupScores()
-    {
-        PlayerPrefs.SetInt("level1score", 0);
-        PlayerPrefs.SetInt("level2score", 0);
-        PlayerPrefs.SetInt("level3score", 0);
-        PlayerPrefs.SetInt("level4score", 0);
-        PlayerPrefs.SetInt("level5score", 0);
-        PlayerPrefs.Save();
-        setupScores = true;
 
-
-    }
 
     void Update()
     {
@@ -327,7 +121,6 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         inGameMenu();
     }
 
-    //ToDo: Look Into Potentially Moving into the PauseMenu
     void isSaveHit()
     {
         if(Input.GetKeyDown(KeyCode.Z)) {
@@ -411,11 +204,13 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
     public void LoadSaveFile(PlayerSaveInformation saveInformation)
     {
-        this.currentHealth = saveInformation.currentHealth;
-        this.maxHealth = saveInformation.maxHealth;
-        updateHealthUI();
-        this.playerScore = saveInformation.playerScore;
-        updateScoreUI();
+        PlayerStatsScript playerStatsScript = GetComponent<PlayerStatsScript>();
+
+        playerStatsScript.currentHealth = saveInformation.currentHealth;
+        playerStatsScript.maxHealth = saveInformation.maxHealth;
+        playerStatsScript.updateHealthUI();
+        playerStatsScript.playerScore = saveInformation.playerScore;
+        playerStatsScript.updateScoreUI();
 
         var delta = saveInformation.position - transform.position;
         controller.Move(delta);

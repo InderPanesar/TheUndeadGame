@@ -186,8 +186,8 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
 
         foreach (GameObject player in players)
         {
-            PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
-            movementScript.UpdateScore();
+            PlayerStatsScript statsScript = player.GetComponent<PlayerStatsScript>();
+            statsScript.UpdateScore();
         }
     }
 
@@ -197,8 +197,8 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
 
         foreach (GameObject player in players)
         {
-            PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
-            movementScript.UpdateScore();
+            PlayerStatsScript statsScript = player.GetComponent<PlayerStatsScript>();
+            statsScript.UpdateScore();
         }
     }
 

@@ -8,7 +8,7 @@ public class EnemyHitScript : MonoBehaviour
 	{
 		if (other.tag == "Player")
 		{
-			other.GetComponent<PlayerMovementScript>().TakeDamage();
+			other.GetComponent<PlayerStatsScript>().TakeDamage();
 		}
 	}
 }
