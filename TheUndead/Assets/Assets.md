@@ -16,7 +16,7 @@
 1. Grass - https://www.all3dfree.net/uploads/5/1/9/6/51967249/choppy_green_grass_textures_seamless_18.jpg
 2. Mountain - https://i.pinimg.com/236x/84/79/30/84793074436f47d876b1a021834dc030--mountain-texture.jpg
 3. Snow - https://www.ics.uci.edu/~djp3/classes/2015_03_ICS163/tasks/arMarker/Unity/arMarker/Assets/Terrain%20Assets/Textures/Snow.jpg
-4. Crosshair - https://assetstore.unity.com/packages/vfx/particles/effect-textures-and-prefabs-109031
+4. Crosshair - https://store-images.s-microsoft.com/image/apps.5689.14081191629062290.4493189a-70bf-47da-8d5a-89b4bc599768.0b240d5e-1d47-4cf2-9605-6cebe1c036a4
 
 # OTHER PACKAGES USED
 1. TextMeshPro - https://docs.unity3d.com/Manual/com.unity.textmeshpro.html
