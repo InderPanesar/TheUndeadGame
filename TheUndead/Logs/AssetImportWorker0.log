@@ -220,3 +220,4 @@ Received Import Request.
   path: Assets/AssetsReferences.docx
   artifactKey: Guid(49148978223cad244824c8e414e5137f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/AssetsReferences.docx using Guid(49148978223cad244824c8e414e5137f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69235f8886ddde2eae1d5230d8c2aaad') in 0.006800 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
