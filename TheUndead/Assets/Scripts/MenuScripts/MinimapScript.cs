@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script for the Minimaps in each seciton.
+/// </summary>
 public class MinimapScript : MonoBehaviour
 {
     public bool isMultiplayer = false;

@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script handles the ending scene of Multiplayer.
+/// </summary>
 public class MultiplayerEndingScript : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Button mainMenuButton;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = true;
@@ -21,6 +22,9 @@ public class MultiplayerEndingScript : MonoBehaviourPunCallbacks
 
     }
 
+    /// <summary>
+    /// Handling of the Main menu button click.
+    /// </summary>
     void MainMenuButtonClick()
     {
         if (PhotonNetwork.CurrentRoom != null)

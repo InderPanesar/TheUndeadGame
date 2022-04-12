@@ -7,6 +7,9 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using Photon.Pun;
 
+/// <summary>
+/// Enum class to show the potential states of the RaycastTarget which are Zombies in this game.
+/// </summary>
 enum RayCastTargetState
 {
     idle,
@@ -14,6 +17,10 @@ enum RayCastTargetState
     attack,
     patrol,
 }
+
+/// <summary>
+/// Class to define the behaviour of the zombies in the game.
+/// </summary>
 public class RaycastTargetScript : MonoBehaviourPunCallbacks
 {
     public float health = 50f;
@@ -26,7 +33,6 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
 
     public Transform[] locationsToMoveTo;
     private int randomSpot;
-
     public int RandomSpot
     {
         get
@@ -92,6 +98,9 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// Looks to handle the movement behavior for each of the Raycast Targets. 
+    /// </summary>
     private void targetMovement()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
@@ -157,7 +166,11 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
 
 
 
-
+    /// <summary>
+    /// Method called when a Raycast Target is shot. 
+    /// </summary>
+    /// <param name="damageValue">The amount of damage done by a shot.</param>
+    /// <param name="isSinglePlayer">If the game mode is Single Player.</param>
     public void takeDamage(float damageValue, bool isSinglePlayer)
     {
 
@@ -179,6 +192,9 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
 
     }
 
+    /// <summary>
+    /// Method called when a Raycast Target dies in Multiplayer. 
+    /// </summary>
     [PunRPC]
     public void Die()
     {
@@ -191,6 +207,9 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// Method called when a Raycast Target dies in SinglePlayer. 
+    /// </summary>
     public void DieSinglePlayer()
     {
         gameObject.SetActive(false);
@@ -202,6 +221,9 @@ public class RaycastTargetScript : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// Method called when a to reload the state of an Enemy from a Save File. 
+    /// </summary>
     public void LoadSaveFile(EnemySaveInformation saveInformation)
     {
         bool value = saveInformation.isEnabled;

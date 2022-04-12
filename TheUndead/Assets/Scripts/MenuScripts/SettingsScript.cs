@@ -5,7 +5,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// Script to handle behaviour on Settings Page of Game.
+/// </summary>
 public class SettingsScript : MonoBehaviour
 {
     public Button submitButton;
@@ -27,9 +29,6 @@ public class SettingsScript : MonoBehaviour
 
     private Resolution _resolution;
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         Resolution[] resolutions = Screen.resolutions.Where(resolution => resolution.refreshRate == 60).ToArray();
@@ -63,7 +62,6 @@ public class SettingsScript : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (resolutionIndex <= 0)
@@ -72,6 +70,9 @@ public class SettingsScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles when Up Arrow is clicked for Window Resolution.
+    /// </summary>
     public void ResolutionButtonUpClick()
     {
         Resolution[] resolutions = Screen.resolutions.Where(resolution => resolution.refreshRate == 60).ToArray();
@@ -88,6 +89,9 @@ public class SettingsScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Handles when Down Arrow is clicked for Window Resolution.
+    /// </summary>
     public void ResolutionButtonDownClick()
     {
         Resolution[] resolutions = Screen.resolutions.Where(resolution => resolution.refreshRate == 60).ToArray();
@@ -103,18 +107,27 @@ public class SettingsScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Handles when Down Arrow is clicked for Window type (Full Screen/Windowed).
+    /// </summary>
     public void WindowDownButtonClick()
     {
         isWindowed = !isWindowed;
         setWindowedModeText();
     }
 
+    /// <summary>
+    /// Handles when Up Arrow is clicked for Window type (Full Screen/Windowed).
+    /// </summary>
     public void WindowUpButtonClick()
     {
         isWindowed = !isWindowed;
         setWindowedModeText();
     }
 
+    /// <summary>
+    /// Handles the updating of the text for the window mode on the UI
+    /// </summary>
     private void setWindowedModeText()
     {
         if(isWindowed)
@@ -127,17 +140,27 @@ public class SettingsScript : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Updates the volume settings in the applicaiton. 
+    /// </summary>
     public void UpdateVol()
     {
         float newVol = volumeSlider.value;
         AudioListener.volume = newVol;
     }
 
+    /// <summary>
+    /// Handles when the user returns out of this menu.
+    /// </summary>
     void BackButtonClick()
     {
         SceneManager.LoadSceneAsync("MainMenu");
     }
 
+    /// <summary>
+    /// Confirm and make the changes to the resolution / fullscreen-windowed.
+    /// </summary>
     void SubmitValues()
     {
         Screen.SetResolution(_resolution.width, _resolution.height, !isWindowed);

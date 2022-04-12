@@ -6,6 +6,9 @@ using System.Xml.Serialization;
 using UnityEngine;
 
 
+/// <summary>
+/// Serializable for specific enemy information.
+/// </summary>
 [Serializable]
 public struct EnemySaveInformation
 {
@@ -16,6 +19,9 @@ public struct EnemySaveInformation
     public bool isEnabled;
 }
 
+/// <summary>
+/// Serializable for the player information.
+/// </summary>
 [Serializable]
 public struct PlayerSaveInformation
 {
@@ -24,13 +30,22 @@ public struct PlayerSaveInformation
     public int playerScore;
     public float maxHealth;
     public float currentHealth;
+    public int ammo;
+    public int ammoCapacity;
 }
+
+/// <summary>
+/// Serializable for multiple enemies information.
+/// </summary>
 [Serializable]
 public struct MultipleEnemiesSaveInformation
 {
     public List<EnemySaveInformation> enemies;
 }
 
+/// <summary>
+/// Serializable for multiple enemies and player information.
+/// </summary>
 [Serializable]
 public struct LevelSaveInformation
 {
@@ -39,7 +54,9 @@ public struct LevelSaveInformation
 }
 
 
-
+/// <summary>
+/// Singleton class for each Saving Script.
+/// </summary>
 public class SavingScripts
 {
 
@@ -59,14 +76,17 @@ public class SavingScripts
     }
 
 
-
-    public void SaveLevel()
+    /// <summary>
+    /// Save the level which the user is currently in.
+    /// </summary>
+    public String SaveLevel()
     {
         string levelFilename = PlayerPrefs.GetString("currentLevel", "unknown") + "_save_file";
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
         PlayerStatsScript statsScript = player.GetComponent<PlayerStatsScript>();
+        GunScript gunScript = player.GetComponentInChildren<GunScript>();
 
         PlayerSaveInformation playerSaveInformation = new PlayerSaveInformation();
         playerSaveInformation.currentHealth = statsScript.currentHealth;
@@ -74,6 +94,8 @@ public class SavingScripts
         playerSaveInformation.maxHealth = statsScript.maxHealth;
         playerSaveInformation.position = player.transform.position;
         playerSaveInformation.rotation = player.transform.rotation;
+        playerSaveInformation.ammo = gunScript.currentAmmo;
+        playerSaveInformation.ammoCapacity = gunScript.ammoCapacity;
 
         GameObject enemyContainer = GameObject.FindGameObjectWithTag("EnemyContainer");
         EnemiesContainerScript containerScript = enemyContainer.GetComponent<EnemiesContainerScript>();
@@ -116,16 +138,23 @@ public class SavingScripts
             xmlDocument.Save(fileName);
         }
 
-        Debug.Log("SAVED GAME!");
+        return "SAVED GAME!";
 
     }
 
-    public void LoadSaveFile()
+    /// <summary>
+    /// Load the save file of the level which the user is currently in.
+    /// </summary>
+    public String LoadSaveFile()
     {
         string levelFilename = PlayerPrefs.GetString("currentLevel", "unknown") + "_save_file";
 
         String fileName = Application.dataPath + "/Saves/" + levelFilename;
 
+        if (!System.IO.File.Exists(fileName))
+        {
+            return "No Save File.";
+        }
 
         XmlDocument xmlDocument = new XmlDocument();
         xmlDocument.Load(fileName);
@@ -159,7 +188,7 @@ public class SavingScripts
         }
 
 
-        Debug.Log("LOADED GAME!");
+        return "LOADED GAME!";
 
 
     }

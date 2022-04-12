@@ -1,11 +1,12 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script handles the Creating and Joining of Rooms in Photon.
+/// </summary>
 public class CreateAndJoinRoomsScript : MonoBehaviourPunCallbacks
 {
     public Text currentTitleText;
@@ -33,7 +34,6 @@ public class CreateAndJoinRoomsScript : MonoBehaviourPunCallbacks
         playButton.interactable = false;
     }
 
-
     void CreateRoom()
     {
         string value = PlayerPrefs.GetString("MultiplayerLevel", "Unknown");
@@ -51,6 +51,7 @@ public class CreateAndJoinRoomsScript : MonoBehaviourPunCallbacks
 
     void BackButton()
     {
+        PhotonNetwork.AutomaticallySyncScene = false;
         if (hasJoinedRoom)
         {
             PhotonNetwork.LeaveRoom();
@@ -62,7 +63,8 @@ public class CreateAndJoinRoomsScript : MonoBehaviourPunCallbacks
             playButton.interactable = false;
 
         }
-        SceneManager.LoadSceneAsync("MultiplayerLevelSelection");
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 
     void OnPlay()
@@ -94,7 +96,6 @@ public class CreateAndJoinRoomsScript : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        print("HIT!"); 
         currentTitleText.text = "Current Room: " + PhotonNetwork.CurrentRoom.Name;
         createRoomButton.interactable = false;
         joinRoomButton.interactable = false;
@@ -113,5 +114,18 @@ public class CreateAndJoinRoomsScript : MonoBehaviourPunCallbacks
 
 
     }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        PhotonNetwork.AutomaticallySyncScene = false;
+        if (PhotonNetwork.CurrentRoom != null)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadSceneAsync("MainMenu");
+    }
+
+
 
 }

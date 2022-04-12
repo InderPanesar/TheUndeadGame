@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Multiplayer Level Selection Script.
+/// </summary>
 public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
 {
 
@@ -28,9 +31,6 @@ public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
 
     private String currentLevelSelected = "";
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         //Make sure cursor is visible and not locked.
@@ -53,7 +53,9 @@ public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
         currentLevelSelected = "MPLevel1";
     }
 
-
+    /// <summary>
+    /// Back Button button Handler.
+    /// </summary>
     void BackButtonClick()
     {
         PhotonNetwork.LeaveLobby();
@@ -61,7 +63,9 @@ public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
         SceneManager.LoadSceneAsync("MainMenu");
     }
 
-
+    /// <summary>
+    /// Level 1 button Handler.
+    /// </summary>
     void Level1ButtonClick()
     {
         playButton.interactable = true;
@@ -71,6 +75,9 @@ public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
 
     }
 
+    /// <summary>
+    /// Level 2 button Handler.
+    /// </summary>
     void Level2ButtonClick()
     {
         playButton.interactable = true;
@@ -80,6 +87,9 @@ public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
 
     }
 
+    /// <summary>
+    /// Level 3 button Handler.
+    /// </summary>
     void Level3ButtonClick()
     {
         playButton.interactable = true;
@@ -88,6 +98,9 @@ public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
         currentLevelSelected = "MPLevel3";
     }
 
+    /// <summary>
+    /// Level 4 button Handler.
+    /// </summary>
     void Level4ButtonClick()
     {
         playButton.interactable = true;
@@ -96,6 +109,9 @@ public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
         currentLevelSelected = "MPLevel4";
     }
 
+    /// <summary>
+    /// Level 5 button Handler.
+    /// </summary>
     void Level5ButtonClick()
     {
         playButton.interactable = true;
@@ -104,6 +120,9 @@ public class MultiplayerLevelSelection : MonoBehaviourPunCallbacks
         currentLevelSelected = "MPLevel5";
     }
 
+    /// <summary>
+    /// Play button Handler.
+    /// </summary>
     void OnPlayClick()
     {
         PlayerPrefs.SetString("MultiplayerLevel", currentLevelSelected);

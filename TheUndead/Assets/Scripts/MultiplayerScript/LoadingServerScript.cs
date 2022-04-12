@@ -5,6 +5,9 @@ using Photon.Pun;
 using UnityEngine.SceneManagement;
 using System;
 
+/// <summary>
+/// Script handles the Loading of Photon.
+/// </summary>
 public class LoadingServerScript : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update

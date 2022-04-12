@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script to handle the mouse rotation for camera.
+/// </summary>
 public class PlayerRotationScript : MonoBehaviour
 {
 
@@ -16,14 +19,12 @@ public class PlayerRotationScript : MonoBehaviour
 
     float xRotation = 0f;
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         view = player.GetComponent<PhotonView>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (view == null && isSinglePlayerOverride)
@@ -39,6 +40,9 @@ public class PlayerRotationScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the rotation of the camera around the screen.
+    /// </summary>
     void PlayerRotationHandler()
     {
         float mouseXValue = Input.GetAxis("Mouse X") * playerMouseSensitivity * Time.deltaTime;

@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 using System;
 using Photon.Realtime;
 
+/// <summary>
+/// Enum Class to show the player states
+/// </summary>
 enum PlayerState
 {
     idle,
@@ -15,6 +18,9 @@ enum PlayerState
     in_air,
 }
 
+/// <summary>
+/// Class handles the Player Keyboard Input - Movement and Saving. 
+/// </summary>
 public class PlayerMovementScript : MonoBehaviourPunCallbacks
 {
     public CharacterController controller;
@@ -40,6 +46,8 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
 
     private PhotonView view;
+
+    public Text UIMessage;
 
 
     void Start()
@@ -76,7 +84,10 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
 
     }
-    
+
+    /// <summary>
+    /// Handles the player Movement. 
+    /// </summary>
     void PlayerMovementHandler()
     {
         isSaveHit();
@@ -121,17 +132,36 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         inGameMenu();
     }
 
+    /// <summary>
+    /// If Saving related keys are pressed they are handled here (saving + loading). 
+    /// </summary>
     void isSaveHit()
     {
         if(Input.GetKeyDown(KeyCode.Z)) {
-            SavingScripts.Instance.SaveLevel();
+            String message = SavingScripts.Instance.SaveLevel();
+            StartCoroutine(ShowUIMessage(message));
         }
         else if (Input.GetKeyDown(KeyCode.M))
         {
-            SavingScripts.Instance.LoadSaveFile();
+            String message = SavingScripts.Instance.LoadSaveFile();
+            StartCoroutine(ShowUIMessage(message));
         }
     }
 
+    /// <summary>
+    /// Show UI Message on scene for saving status. 
+    /// </summary>
+    IEnumerator ShowUIMessage(string message)
+    {
+        UIMessage.text = message;
+        UIMessage.enabled = true;
+        yield return new WaitForSeconds(2);
+        UIMessage.enabled = false;
+    }
+
+    /// <summary>
+    /// Jump handler for the player. 
+    /// </summary>
     void PlayerJumpHandler()
     {
         if (Input.GetKeyDown("space") && isGrounded())
@@ -142,11 +172,17 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// Check if the player is grounded on the terrain. 
+    /// </summary>
     bool isGrounded()
     {
         return Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
     }
 
+    /// <summary>
+    /// Handles players sprinting. 
+    /// </summary>
     void PlayerSprintHandler()
     {
         if (Input.GetButton("Sprint") && isGrounded())
@@ -172,6 +208,9 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// return bool value on is player is moving. 
+    /// </summary>
     bool PlayerIsInputting()
     {
         if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
@@ -181,6 +220,9 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         return false;
     }
 
+    /// <summary>
+    /// Sound Handler to make it change depending on Walking vs Running. 
+    /// </summary>
     void PlayerSoundHandler()
     {
         if(isGrounded() && PlayerIsInputting() && !walkingAudioSource.isPlaying && !runningAudioSource.isPlaying && playerSpeedMultipler == 2f)
@@ -197,11 +239,17 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// In Game Menu Handler. 
+    /// </summary>
     void inGameMenu()
     {
         if (Input.GetKeyDown("escape")) Cursor.lockState = CursorLockMode.None;
     }
 
+    /// <summary>
+    /// Load state from save player for Player Movement. 
+    /// </summary>
     public void LoadSaveFile(PlayerSaveInformation saveInformation)
     {
         PlayerStatsScript playerStatsScript = GetComponent<PlayerStatsScript>();
@@ -216,6 +264,9 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
         controller.Move(delta);
 
         transform.rotation = saveInformation.rotation;
+
+        GunScript gunScript = GetComponentInChildren<GunScript>();
+        gunScript.loadSaveFile(saveInformation.ammo, saveInformation.ammoCapacity);
 
     }
 
