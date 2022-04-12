@@ -1,8 +1,9 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script handles the spawning of different entites (Player and Enemies).
+/// </summary>
 public class SpawnPlayersScript : MonoBehaviour
 {
     public GameObject playerPrefab;

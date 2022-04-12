@@ -1,10 +1,11 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script to handle player stats such as Health and Score.
+/// </summary>
 public class PlayerStatsScript : MonoBehaviour
 {
 
@@ -20,6 +21,9 @@ public class PlayerStatsScript : MonoBehaviour
     public float currentHealth = 100;
 
 
+    /// <summary>
+    /// Check if the player has killed all enemies in the scene.
+    /// </summary>
     private void CheckIfScoreLimitMet()
     {
 
@@ -61,12 +65,18 @@ public class PlayerStatsScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Update the UI appropriately to show Players Score - Single Player.
+    /// </summary>
     public void updateScoreUI()
     {
         if (scoreText == null) scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
         scoreText.text = "Player Score: " + playerScore;
     }
 
+    /// <summary>
+    /// Update the UI appropriately to show Players Health - Single Player.
+    /// </summary>
     public void updateHealthUI()
     {
         if (playerHealthBar == null) playerHealthBar = (Image)GameObject.FindWithTag("UI Health Bar").GetComponent<Image>() as Image;
@@ -75,7 +85,9 @@ public class PlayerStatsScript : MonoBehaviour
         playerHealthBar.fillAmount = values;
     }
 
-
+    /// <summary>
+    /// Allows the player to take damage.
+    /// </summary>
     public void TakeDamage()
     {
 
@@ -85,10 +97,16 @@ public class PlayerStatsScript : MonoBehaviour
         }
         else
         {
+            //Multiplayer both players have the same health bar.
+            //So damage done to one must be synced to all other players.
+            //Hence AllBuffered is used just incase a new player was to join the lobby.
             view.RPC("updateHealthBar", RpcTarget.AllBuffered);
         }
     }
 
+    /// <summary>
+    /// Update the UI appropriately to show Players Health - Multiplayer.
+    /// </summary>
     [PunRPC]
     private void updateHealthBar()
     {
@@ -118,6 +136,9 @@ public class PlayerStatsScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Update the UI appropriately to show Players Score - Multiplayer.
+    /// </summary>
     public void UpdateScore()
     {
         if (isSinglePlayerOverride)
@@ -130,6 +151,9 @@ public class PlayerStatsScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Increases the score for the player.
+    /// </summary>
     [PunRPC]
     private void increaseScore()
     {
@@ -154,6 +178,9 @@ public class PlayerStatsScript : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Complete the level.
+    /// </summary>
     [PunRPC]
     private void CompleteLevel()
     {
@@ -167,18 +194,12 @@ public class PlayerStatsScript : MonoBehaviour
         else
         {
             SceneManager.LoadSceneAsync("MultiplayerEndingLevel");
-
         }
 
 
 
     }
 
-
-
-
-
-    // Start is called before the first frame update
     void Start()
     {
         scoreText = (Text)GameObject.FindWithTag("Player Score Text HUD").GetComponent<Text>() as Text;
@@ -192,6 +213,9 @@ public class PlayerStatsScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Setup the scores for each level in the PlayerPrefs for each level.
+    /// </summary>
     void SetupScores()
     {
         PlayerPrefs.SetInt("level1score", 0);
@@ -201,8 +225,6 @@ public class PlayerStatsScript : MonoBehaviour
         PlayerPrefs.SetInt("level5score", 0);
         PlayerPrefs.Save();
         setupScores = true;
-
-
     }
 
     // Update is called once per frame

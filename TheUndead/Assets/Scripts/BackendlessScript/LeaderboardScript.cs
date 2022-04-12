@@ -6,11 +6,18 @@ using System.Net;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Serialised Leaderboard Result Model from the JSON web request.
+/// </summary>
 [Serializable]
 public class LeaderboardResult
 {
     public float score { get; set; }
 }
+
+/// <summary>
+///  Singleton Class to add or retrieve the backendless high scores for a level.
+/// </summary>
 public class LeaderboardScript 
 {
 
@@ -29,6 +36,12 @@ public class LeaderboardScript
         }
     }
 
+    /// <summary>
+    /// Retrieves the high scores for a specific Level from Backendless
+    /// </summary>
+    /// <param name="tableName">The name of the level</param>
+    /// <param name="maxScore">Number of scores to be returned</param>
+    /// <param name="callback">Method to be called once web request completed - returns list of results</param>
     public IEnumerator GetHighScores(string tableName, int maxScore, System.Action<List<LeaderboardResult>> callback = null)
     {
 
@@ -69,6 +82,12 @@ public class LeaderboardScript
 
     }
 
+    /// <summary>
+    /// Add a score to the high scores for a specific Level from Backendless
+    /// </summary>
+    /// <param name="lengthOfTime">The time for user to complete level.</param>
+    /// <param name="tableName">The name of the level.</param>
+    /// <param name="scoreHandled">Action returns bool when score added.</param>
     public IEnumerator AddScore(float lengthOfTime, String tableName, Action<bool> scoreHandled)
     {
 

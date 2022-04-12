@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script which defines the behaviour of the players gun. 
+/// </summary>
 public class GunScript : MonoBehaviourPunCallbacks
 {
     public float damage = 1f;
@@ -31,7 +34,6 @@ public class GunScript : MonoBehaviourPunCallbacks
     private Text ammoCountText; 
 
    
-    // Start is called before the first frame update
     void Start()
     {
         ammoCountText = (Text)GameObject.FindWithTag("Player Ammo Text HUD").GetComponent<Text>() as Text;
@@ -39,7 +41,6 @@ public class GunScript : MonoBehaviourPunCallbacks
         currentAmmo = ammoCapacity;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (view == null && isSinglePlayerOverride)
@@ -56,6 +57,10 @@ public class GunScript : MonoBehaviourPunCallbacks
 
 
     }
+
+    /// <summary>
+    /// Handles what happens when a gun is shot. 
+    /// </summary>
     private void ShootHandler()
     {
        
@@ -73,6 +78,9 @@ public class GunScript : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// Handles the animations the raycasts and FX's when a gun is shot. 
+    /// </summary>
     private void Shoot()
     {
         if (!muzzleFlash.isPlaying)
@@ -108,12 +116,19 @@ public class GunScript : MonoBehaviourPunCallbacks
         }
     }
 
+
+    /// <summary>
+    /// Updates the ammo count of the user on the UI. 
+    /// </summary>
     private void updateText()
     {
         if(isReloading) ammoCountText.text = "Ammo: Reloading";
         else ammoCountText.text = "Ammo: " + currentAmmo + "/" + ammoCapacity;
     }
 
+    /// <summary>
+    /// Handles the ammo being reloaded in the game. 
+    /// </summary>
     IEnumerator ReloadTime()
     {
         if (!isReloading) yield break;
@@ -123,6 +138,9 @@ public class GunScript : MonoBehaviourPunCallbacks
         updateText();
     }
 
+    /// <summary>
+    /// Method called when a to reload the state of the gun from a Save File. 
+    /// </summary>
     public void loadSaveFile(int _currentAmmo, int _ammoCapacity)
     {
         currentAmmo = _currentAmmo;

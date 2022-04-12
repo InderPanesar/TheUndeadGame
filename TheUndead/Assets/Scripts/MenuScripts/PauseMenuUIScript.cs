@@ -7,6 +7,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script for the Pause menu.
+/// </summary>
 public class PauseMenuUIScript : MonoBehaviour
 {
     public static bool GameIsPaused = false;
@@ -48,6 +51,9 @@ public class PauseMenuUIScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// When resume button is clicked on pause menu.
+    /// </summary>
     private void Resume()
     {
 
@@ -75,6 +81,9 @@ public class PauseMenuUIScript : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Pause Menu is shown in the game.
+    /// </summary>
     private void Pause()
     {
         pauseMenuUI.SetActive(true);
@@ -100,6 +109,9 @@ public class PauseMenuUIScript : MonoBehaviour
         StartCoroutine(EnableCursor());
     }
 
+    /// <summary>
+    /// Disable the cursor on the scene.
+    /// </summary>
     private IEnumerator DisableCursor()
     {
         yield return new WaitForEndOfFrame();
@@ -107,6 +119,9 @@ public class PauseMenuUIScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    /// <summary>
+    /// Enable the cursor on the scene.
+    /// </summary>
     private IEnumerator EnableCursor()
     {
         yield return new WaitForEndOfFrame();
@@ -114,12 +129,18 @@ public class PauseMenuUIScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
+    /// <summary>
+    /// Return to level selection button in single player.
+    /// </summary>
     void LevelSelectionButtonClick()
     {
         Resume();
         SceneManager.LoadSceneAsync("SinglePlayerLevelSelection");
     }
 
+    /// <summary>
+    /// Return to main menu button in multiplayer.
+    /// </summary>
     void MainMenuButtonClick()
     {
         Resume();
@@ -133,6 +154,9 @@ public class PauseMenuUIScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Return to Exit Button in single player.
+    /// </summary>
     void ExitButtonClick()
     {
         Application.Quit();

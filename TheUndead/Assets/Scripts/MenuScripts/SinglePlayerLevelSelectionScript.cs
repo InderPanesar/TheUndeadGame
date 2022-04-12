@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script for a the single player selection.
+/// </summary>
 public class SinglePlayerLevelSelectionScript : MonoBehaviour
 {
 
@@ -32,9 +35,6 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
 
     private String currentLevelSelected = "";
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         //Make sure cursor is visible and not locked.
@@ -58,11 +58,17 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         ShowScoreList(currentLevelSelected);
     }
 
+    /// <summary>
+    /// Show all the scores for a specific levels.
+    /// </summary>
     private void ShowScoreList(String tableName)
     {
         StartCoroutine(LeaderboardScript.Instance.GetHighScores(tableName, maxScore, DisplayLeaderboard));
     }
 
+    /// <summary>
+    /// Displays the results of a leaderboard results on the UI.
+    /// </summary>
     private void DisplayLeaderboard(List<LeaderboardResult> scores)
     {
         int values = scores.Count;
@@ -84,11 +90,17 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles when back button is pressed on UI.
+    /// </summary>
     void BackButtonClick()
     {
         SceneManager.LoadSceneAsync("MainMenu");
     }
 
+    /// <summary>
+    /// Handles when Level 1 button is pressed on UI.
+    /// </summary>
     void Level1ButtonClick()
     {
         playButton.interactable = true;
@@ -98,6 +110,9 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         ShowScoreList(currentLevelSelected);
     }
 
+    /// <summary>
+    /// Handles when Level 2 button is pressed on UI.
+    /// </summary>
     void Level2ButtonClick()
     {
         playButton.interactable = true;
@@ -107,6 +122,9 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         ShowScoreList(currentLevelSelected);
     }
 
+    /// <summary>
+    /// Handles when Level 3 button is pressed on UI.
+    /// </summary>
     void Level3ButtonClick()
     {
         playButton.interactable = true;
@@ -116,6 +134,9 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         ShowScoreList(currentLevelSelected);
     }
 
+    /// <summary>
+    /// Handles when Level 4 button is pressed on UI.
+    /// </summary>
     void Level4ButtonClick()
     {
         playButton.interactable = true;
@@ -125,6 +146,9 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         ShowScoreList(currentLevelSelected);
     }
 
+    /// <summary>
+    /// Handles when Level 5 button is pressed on UI.
+    /// </summary>
     void Level5ButtonClick()
     {
         playButton.interactable = true;
@@ -134,15 +158,13 @@ public class SinglePlayerLevelSelectionScript : MonoBehaviour
         ShowScoreList(currentLevelSelected);
     }
 
+    /// <summary>
+    /// Handles when play is pressed on the UI.
+    /// </summary>
     void OnPlayClick()
     {
         PlayerPrefs.SetString("currentLevel", currentLevelSelected);
         SceneManager.LoadSceneAsync(currentLevelSelected);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

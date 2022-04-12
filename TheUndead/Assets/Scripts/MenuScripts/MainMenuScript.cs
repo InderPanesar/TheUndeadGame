@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// Script for main menu page.
+/// </summary>
 public class MainMenuScript : MonoBehaviour
 {
     [SerializeField] private Button singlePlayerButton;
@@ -12,7 +12,6 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
 
-    // Start is called before the first frame update
     void Start()
     {
         //Make sure cursor is visible and not locked.
@@ -25,27 +24,38 @@ public class MainMenuScript : MonoBehaviour
         exitButton.onClick.AddListener(ExitButtonClick);
     }
 
-    // Update is called once per frame
     void Update()
     {
 
     }
 
+    /// <summary>
+    /// Method when Single Player Button is clicked.
+    /// </summary>
     void SinglePlayerButtonClick()
     {
         SceneManager.LoadSceneAsync("SinglePlayerLevelSelection");
     }
 
+    /// <summary>
+    /// Method when Multi-player button is clicked.
+    /// </summary>
     void MultiPlayerButtonClick()
     {
         SceneManager.LoadSceneAsync("LoadingScene");
     }
 
+    /// <summary>
+    /// Method when Settings button is clicked.
+    /// </summary>
     void SettingsButtonClick()
     {
         SceneManager.LoadSceneAsync("SettingsPage");
     }
 
+    /// <summary>
+    /// Method when exit button is clicked.
+    /// </summary>
     void ExitButtonClick()
     {
         Application.Quit();

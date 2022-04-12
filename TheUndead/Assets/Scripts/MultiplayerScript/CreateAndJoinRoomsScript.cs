@@ -1,11 +1,12 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script handles the Creating and Joining of Rooms in Photon.
+/// </summary>
 public class CreateAndJoinRoomsScript : MonoBehaviourPunCallbacks
 {
     public Text currentTitleText;
@@ -32,7 +33,6 @@ public class CreateAndJoinRoomsScript : MonoBehaviourPunCallbacks
 
         playButton.interactable = false;
     }
-
 
     void CreateRoom()
     {

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Photon level Handler to keep both players in sync.
+/// </summary>
 public class PhotonLevelScript : MonoBehaviourPunCallbacks
 {
     public override void OnMasterClientSwitched(Player newMasterClient)

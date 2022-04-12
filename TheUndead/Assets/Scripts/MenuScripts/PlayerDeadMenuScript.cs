@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script for player dead scene.
+/// </summary>
 public class PlayerDeadMenuScript : MonoBehaviour
 {
     [SerializeField] private Button retryButton;
     [SerializeField] private Button returnToLevelButton;
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = true;
@@ -19,12 +21,18 @@ public class PlayerDeadMenuScript : MonoBehaviour
         returnToLevelButton.onClick.AddListener(ReturnToLevelClicked);
     }
 
+    /// <summary>
+    /// Called when retry button is clicked on scene.
+    /// </summary>
     void RetryButtonClicked()
     {
         string level = PlayerPrefs.GetString("currentLevel");
         SceneManager.LoadSceneAsync(level);
     }
 
+    /// <summary>
+    /// Called when level selection button is clicked on scene.
+    /// </summary>
     void ReturnToLevelClicked()
     {
         SceneManager.LoadSceneAsync("SinglePlayerLevelSelection");
