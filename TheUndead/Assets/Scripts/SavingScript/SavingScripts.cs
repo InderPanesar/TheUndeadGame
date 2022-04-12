@@ -24,6 +24,10 @@ public struct PlayerSaveInformation
     public int playerScore;
     public float maxHealth;
     public float currentHealth;
+    public int ammo;
+    public int ammoCapacity;
+
+
 }
 [Serializable]
 public struct MultipleEnemiesSaveInformation
@@ -67,6 +71,7 @@ public class SavingScripts
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         PlayerMovementScript movementScript = player.GetComponent<PlayerMovementScript>();
         PlayerStatsScript statsScript = player.GetComponent<PlayerStatsScript>();
+        GunScript gunScript = player.GetComponentInChildren<GunScript>();
 
         PlayerSaveInformation playerSaveInformation = new PlayerSaveInformation();
         playerSaveInformation.currentHealth = statsScript.currentHealth;
@@ -74,6 +79,8 @@ public class SavingScripts
         playerSaveInformation.maxHealth = statsScript.maxHealth;
         playerSaveInformation.position = player.transform.position;
         playerSaveInformation.rotation = player.transform.rotation;
+        playerSaveInformation.ammo = gunScript.currentAmmo;
+        playerSaveInformation.ammoCapacity = gunScript.ammoCapacity;
 
         GameObject enemyContainer = GameObject.FindGameObjectWithTag("EnemyContainer");
         EnemiesContainerScript containerScript = enemyContainer.GetComponent<EnemiesContainerScript>();

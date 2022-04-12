@@ -1,7 +1,5 @@
 using Photon.Pun;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,16 +21,16 @@ public class GunScript : MonoBehaviourPunCallbacks
     private PhotonView view;
 
     public int reloadTime = 5;
+    public int currentAmmo;
     public int ammoCapacity = 100;
 
 
     private float nextGunFireTime = 0f;
 
     private bool isReloading = false;
-    private int currentAmmo;
     private Text ammoCountText; 
-     
 
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -123,6 +121,20 @@ public class GunScript : MonoBehaviourPunCallbacks
         isReloading = false;
         currentAmmo = ammoCapacity;
         updateText();
+    }
+
+    public void loadSaveFile(int _currentAmmo, int _ammoCapacity)
+    {
+        currentAmmo = _currentAmmo;
+        ammoCapacity = _ammoCapacity;
+        updateText();
+        if (currentAmmo <= 0)
+        {
+            isReloading = true;
+            updateText();
+            muzzleFlash.Stop();
+            StartCoroutine(ReloadTime());
+        }
     }
 
 }

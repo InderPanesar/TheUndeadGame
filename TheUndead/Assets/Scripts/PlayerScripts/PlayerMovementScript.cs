@@ -229,6 +229,9 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
         transform.rotation = saveInformation.rotation;
 
+        GunScript gunScript = GetComponentInChildren<GunScript>();
+        gunScript.loadSaveFile(saveInformation.ammo, saveInformation.ammoCapacity);
+
     }
 
 }

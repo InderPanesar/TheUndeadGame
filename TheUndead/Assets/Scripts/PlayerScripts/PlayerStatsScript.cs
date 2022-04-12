@@ -19,6 +19,7 @@ public class PlayerStatsScript : MonoBehaviour
     public float maxHealth = 100;
     public float currentHealth = 100;
 
+
     private void CheckIfScoreLimitMet()
     {
 
