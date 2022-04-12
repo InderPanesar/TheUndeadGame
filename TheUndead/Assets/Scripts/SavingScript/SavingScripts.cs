@@ -60,7 +60,7 @@ public class SavingScripts
 
 
 
-    public void SaveLevel()
+    public String SaveLevel()
     {
         string levelFilename = PlayerPrefs.GetString("currentLevel", "unknown") + "_save_file";
 
@@ -116,16 +116,20 @@ public class SavingScripts
             xmlDocument.Save(fileName);
         }
 
-        Debug.Log("SAVED GAME!");
+        return "SAVED GAME!";
 
     }
 
-    public void LoadSaveFile()
+    public String LoadSaveFile()
     {
         string levelFilename = PlayerPrefs.GetString("currentLevel", "unknown") + "_save_file";
 
         String fileName = Application.dataPath + "/Saves/" + levelFilename;
 
+        if (!System.IO.File.Exists(fileName))
+        {
+            return "No Save File.";
+        }
 
         XmlDocument xmlDocument = new XmlDocument();
         xmlDocument.Load(fileName);
@@ -159,7 +163,7 @@ public class SavingScripts
         }
 
 
-        Debug.Log("LOADED GAME!");
+        return "LOADED GAME!";
 
 
     }

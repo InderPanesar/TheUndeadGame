@@ -41,6 +41,8 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
 
     private PhotonView view;
 
+    public Text UIMessage;
+
 
     void Start()
     {
@@ -124,12 +126,22 @@ public class PlayerMovementScript : MonoBehaviourPunCallbacks
     void isSaveHit()
     {
         if(Input.GetKeyDown(KeyCode.Z)) {
-            SavingScripts.Instance.SaveLevel();
+            String message = SavingScripts.Instance.SaveLevel();
+            StartCoroutine(ShowUIMessage(message));
         }
         else if (Input.GetKeyDown(KeyCode.M))
         {
-            SavingScripts.Instance.LoadSaveFile();
+            String message = SavingScripts.Instance.LoadSaveFile();
+            StartCoroutine(ShowUIMessage(message));
         }
+    }
+
+    IEnumerator ShowUIMessage(string message)
+    {
+        UIMessage.text = message;
+        UIMessage.enabled = true;
+        yield return new WaitForSeconds(2);
+        UIMessage.enabled = false;
     }
 
     void PlayerJumpHandler()

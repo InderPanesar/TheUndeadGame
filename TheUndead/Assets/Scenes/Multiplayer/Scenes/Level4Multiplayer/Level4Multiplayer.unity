@@ -3095,6 +3095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 19810088}
+  isOnline: 1
   resumeButton: {fileID: 1564497976}
   levelSelectionButton: {fileID: 1130282037}
   exitButton: {fileID: 296111993}
