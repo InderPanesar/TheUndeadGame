@@ -15,11 +15,11 @@ C:/Users/Inder/Documents/GitHub/TheUndeadGame/TheUndead
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-51269
+55041
 Successfully changed project path to: C:/Users/Inder/Documents/GitHub/TheUndeadGame/TheUndead
 C:/Users/Inder/Documents/GitHub/TheUndeadGame/TheUndead
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 93.05 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 85.58 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.1.13f1 (a03098edbbe0)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.1.13f1/Editor/Data/Resources/UnitySubsystems
@@ -35,91 +35,91 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.1.13f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.1.13f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.1.13f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56496
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56836
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.13f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001649 seconds.
+Registered in 0.001839 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 105.30 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 92.87 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.178 seconds
+- Completed reload, in  1.859 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1179ms)
-		BeginReloadAssembly (51ms)
+	ReloadAssembly (1860ms)
+		BeginReloadAssembly (44ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (463ms)
-			LoadAssemblies (48ms)
+		EndReloadAssembly (421ms)
+			LoadAssemblies (42ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (153ms)
+			SetupTypeCache (147ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (26ms)
-			SetupLoadedEditorAssemblies (239ms)
+			RebuildScriptCaches (24ms)
+			SetupLoadedEditorAssemblies (210ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (5ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (105ms)
-				BeforeProcessingInitializeOnLoad (2ms)
-				ProcessInitializeOnLoadAttributes (94ms)
-				ProcessInitializeOnLoadMethodAttributes (32ms)
+				RefreshPlugins (93ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (82ms)
+				ProcessInitializeOnLoadMethodAttributes (28ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.006930 seconds.
+Registered in 0.007016 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\Inder\Documents\GitHub\TheUndeadGame\TheUndead\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\Inder\Documents\GitHub\TheUndeadGame\TheUndead\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.62 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.57 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.002 seconds
+- Completed reload, in  0.987 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1002ms)
-		BeginReloadAssembly (134ms)
+	ReloadAssembly (988ms)
+		BeginReloadAssembly (127ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (4ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (16ms)
-		EndReloadAssembly (813ms)
-			LoadAssemblies (75ms)
+			CreateAndSetChildDomain (15ms)
+		EndReloadAssembly (807ms)
+			LoadAssemblies (78ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (309ms)
+			SetupTypeCache (298ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (45ms)
-			SetupLoadedEditorAssemblies (297ms)
+			RebuildScriptCaches (51ms)
+			SetupLoadedEditorAssemblies (293ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (4ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (81ms)
-				ProcessInitializeOnLoadAttributes (199ms)
+				BeforeProcessingInitializeOnLoad (73ms)
+				ProcessInitializeOnLoadAttributes (202ms)
 				ProcessInitializeOnLoadMethodAttributes (6ms)
-				AfterProcessingInitializeOnLoad (6ms)
+				AfterProcessingInitializeOnLoad (7ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (6ms)
+			AwakeInstancesAfterBackupRestoration (7ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 0.62 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.68 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3239 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 208.9 MB.
-System memory in use after: 209.1 MB.
+Unloading 3229 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 207.1 MB.
+System memory in use after: 207.3 MB.
 
-Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 3716.
-Total: 2.458500 ms (FindLiveObjects: 0.351400 ms CreateObjectMapping: 0.238800 ms MarkObjects: 1.695200 ms  DeleteObjects: 0.171600 ms)
+Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 3706.
+Total: 1.983500 ms (FindLiveObjects: 0.223900 ms CreateObjectMapping: 0.148100 ms MarkObjects: 1.452400 ms  DeleteObjects: 0.158300 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -134,19 +134,72 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  path: Assets/AssetsReferences.docx
-  artifactKey: Guid(122d791c496125b4eb25d6eb3704677d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/AssetsReferences.docx using Guid(122d791c496125b4eb25d6eb3704677d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7582249554ce724b3363bc901587db5') in 0.030332 seconds 
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/Spheres.mat
+  artifactKey: Guid(5c877246d93a0cd4da1e97aef0735ffa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/Spheres.mat using Guid(5c877246d93a0cd4da1e97aef0735ffa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '585540a80cf79d16cce4e7eefa126045') in 0.104291 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 27.470557 seconds.
-  path: Assets/AssetsReferences.docx
-  artifactKey: Guid(122d791c496125b4eb25d6eb3704677d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/AssetsReferences.docx using Guid(122d791c496125b4eb25d6eb3704677d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2de2045400a6f15b64f13a4a60bc74f') in 0.002831 seconds 
+  Time since last request: 0.000254 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/Sleigh.mat
+  artifactKey: Guid(a104b87508ce003499b14e25144f6850) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/Sleigh.mat using Guid(a104b87508ce003499b14e25144f6850) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb6622c207c46ab21fd625b0318b0275') in 0.029474 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 52.257518 seconds.
-  path: Assets/Assets.md
-  artifactKey: Guid(1d5084be97ffa9f4198a89b353ac4af0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Assets.md using Guid(1d5084be97ffa9f4198a89b353ac4af0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a7d183c4eb7965ff6e5143e893a3fa91') in 0.004662 seconds 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+  Time since last request: 0.000199 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/boxesNM.png
+  artifactKey: Guid(b28ea3d96f9a78c48a902ebbfcaaea4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/boxesNM.png using Guid(b28ea3d96f9a78c48a902ebbfcaaea4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6960e80181a778c44daed9d5a750e171') in 0.043259 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000170 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/star.tga
+  artifactKey: Guid(f029e1db5fed4b04093c66352eea9ff2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/star.tga using Guid(f029e1db5fed4b04093c66352eea9ff2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9dc1c2f33aebc878e301b6db44494e17') in 0.020472 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000244 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/slleigh.tga
+  artifactKey: Guid(29a4e0bb3f863f043bbb4cc3c80b24f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/slleigh.tga using Guid(29a4e0bb3f863f043bbb4cc3c80b24f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3be955c0719c1de19a8de10987c88f57') in 0.011030 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000215 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/tree2.tga
+  artifactKey: Guid(7d7b719fea4941c49933344a011d37c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/tree2.tga using Guid(7d7b719fea4941c49933344a011d37c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '66327c1b5683f4f46c83719c45c64fd2') in 0.009364 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000191 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/Star.mat
+  artifactKey: Guid(f68962e857a866242b0053d09764f3fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/Star.mat using Guid(f68962e857a866242b0053d09764f3fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '05f91b1f043d8d32dcff2dcb6624cd03') in 0.010107 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000166 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/boxes.mat
+  artifactKey: Guid(aaea7874fbe0f494caf541d25a7f2b26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/boxes.mat using Guid(aaea7874fbe0f494caf541d25a7f2b26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '980efe071541c7cc6709dce5981b28ad') in 0.011848 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000182 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/Tree.mat
+  artifactKey: Guid(a2e5f6627d2d0a5428c4e975e5a6bfa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Materials/Tree.mat using Guid(a2e5f6627d2d0a5428c4e975e5a6bfa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '591c334622e1aa455004465e42dd59b9') in 0.010364 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000205 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/boxes.tga
+  artifactKey: Guid(4b36b3c1bf5fc9d46a76f1b418e17a0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/boxes.tga using Guid(4b36b3c1bf5fc9d46a76f1b418e17a0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df5000af4851d5226d764f1a9b36a29d') in 0.007855 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000177 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/spheres.tga
+  artifactKey: Guid(ae4203b4c1a6b03479b7bd2703fe9cde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/spheres.tga using Guid(ae4203b4c1a6b03479b7bd2703fe9cde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ffe318cdd6fb7e56e05afc42a5063452') in 0.008509 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000161 seconds.
+  path: Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/slleighNM.tga
+  artifactKey: Guid(2373e0afab1bb92438bcd8412acf8850) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OnlinePrefabs/Christmas Gifts/Textures/slleighNM.tga using Guid(2373e0afab1bb92438bcd8412acf8850) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b6326d267d4a897ccbbf5f0ea3f5bec8') in 0.009883 seconds 
