@@ -3,8 +3,11 @@
 1. Dream Forest Tree | 3D Trees - https://assetstore.unity.com/packages/3d/vegetation/trees/dream-forest-tree-105297
 2. Wispy Skybox | 2D Sky - https://assetstore.unity.com/packages/2d/textures-materials/sky/wispy-skybox-21737
 3. Village Houses Pack - https://assetstore.unity.com/packages/3d/characters/village-houses-pack-63695
-4. Machine Gun Asset - https://assetstore.unity.com/packages/3d/props/guns/machine-guns-20611
-5. VFX Particles (Gun Hit Effect) - https://assetstore.unity.com/packages/vfx/particles/effect-textures-and-prefabs-109031
+4. Free Machine Gun - https://assetstore.unity.com/packages/3d/props/guns/machine-guns-20611
+5. Effect Textures and Prefabs (Gun Hit Effect) - https://assetstore.unity.com/packages/vfx/particles/effect-textures-and-prefabs-109031
+6. Christmas Gifts - https://assetstore.unity.com/packages/3d/props/interior/christmas-gifts-52190
+7. Standard Assets - https://assetstore.unity.com/packages/essentials/asset-packs/standard-assets-for-unity-2018-4-32351
+8. Photon PUN2 Free - https://assetstore.unity.com/packages/tools/network/pun-2-free-119922
 
 # SOUNDS USED FROM INTERNET
 
@@ -24,7 +27,7 @@
 # NPC MODEL AND ANIMATIONS FROM MIXAMO [All Appropriate Files in Assets/Mixamo]
 1. Zombie (Zombie) - https://www.mixamo.com/#/?page=1&query=zombie&type=Character
 2. Zombie Attack Animation (Zombie Swipe Attack) - https://www.mixamo.com/#/?page=1&query=Zombie+Swipe+Attack
-3. Zombie Attack Idle (Zombie Alert Idle) - https://www.mixamo.com/#/?page=1&query=Zombie+Alert+Idle
+3. Zombie Idle (Zombie Alert Idle) - https://www.mixamo.com/#/?page=1&query=Zombie+Alert+Idle
 4. Zombie Run (Zombie Run) - https://www.mixamo.com/#/?page=1&query=Zombie+Run
 
 # FONTS

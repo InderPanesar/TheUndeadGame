@@ -148,6 +148,9 @@ public class SettingsScript : MonoBehaviour
     {
         float newVol = volumeSlider.value;
         AudioListener.volume = newVol;
+        print(AudioListener.volume);
+        PlayerPrefs.SetFloat("AudioVolume", newVol);
+        PlayerPrefs.Save();
     }
 
     /// <summary>
@@ -164,6 +167,7 @@ public class SettingsScript : MonoBehaviour
     void SubmitValues()
     {
         Screen.SetResolution(_resolution.width, _resolution.height, !isWindowed);
+        SceneManager.LoadSceneAsync("MainMenu");
     }
 }
 
