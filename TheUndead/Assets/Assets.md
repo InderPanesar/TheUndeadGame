@@ -1,3 +1,7 @@
+# DETAILS
+1. Name: Inder Panesar
+2. Student Number: 180039762
+
 # PREFABS USED FROM UNITY ASSET STORE
 
 1. Dream Forest Tree | 3D Trees - https://assetstore.unity.com/packages/3d/vegetation/trees/dream-forest-tree-105297
