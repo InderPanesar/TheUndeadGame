@@ -137,3 +137,4 @@ Received Import Request.
   path: Assets/Scenes/MainMenu/SinglePlayerLevelSelection.unity
   artifactKey: Guid(c0cc950d12495224d9868043d3e7605a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/Scenes/MainMenu/SinglePlayerLevelSelection.unity using Guid(c0cc950d12495224d9868043d3e7605a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e6bd93d795c864d9a39bf0ad86aace3f') in 0.011787 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
