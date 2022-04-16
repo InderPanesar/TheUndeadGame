@@ -22,6 +22,8 @@ public class MainMenuScript : MonoBehaviour
         multiPlayerButton.onClick.AddListener(MultiPlayerButtonClick);
         settingsButton.onClick.AddListener(SettingsButtonClick);
         exitButton.onClick.AddListener(ExitButtonClick);
+
+        AudioListener.volume = PlayerPrefs.GetFloat("AudioVolume", 1);
     }
 
     void Update()
