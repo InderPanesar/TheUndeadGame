@@ -545,6 +545,7 @@ MonoBehaviour:
   player: {fileID: 6442037570064913236}
   isSinglePlayerOverride: 0
   reloadTime: 5
+  currentAmmo: 0
   ammoCapacity: 100
 --- !u!1 &6442037570169103365
 GameObject:

@@ -1998,6 +1998,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6442037570064913322, guid: 699db7feb50542643a835d3c9245c71f, type: 3}
+      propertyPath: UIMessage
+      value: 
+      objectReference: {fileID: 811434445}
+    - target: {fileID: 6442037570064913322, guid: 699db7feb50542643a835d3c9245c71f, type: 3}
       propertyPath: isSinglePlayerOverride
       value: 1
       objectReference: {fileID: 0}
@@ -3718,6 +3722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 753992924}
+  isOnline: 0
   resumeButton: {fileID: 1587540014}
   levelSelectionButton: {fileID: 935039477}
   exitButton: {fileID: 963671350}

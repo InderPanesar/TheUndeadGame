@@ -24,6 +24,7 @@ public class MainMenuScript : MonoBehaviour
         exitButton.onClick.AddListener(ExitButtonClick);
 
         AudioListener.volume = PlayerPrefs.GetFloat("AudioVolume", 1);
+
     }
 
     void Update()

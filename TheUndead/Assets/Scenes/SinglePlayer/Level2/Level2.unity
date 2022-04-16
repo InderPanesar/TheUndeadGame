@@ -756,6 +756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 1941341009}
+  isOnline: 0
   resumeButton: {fileID: 605493100}
   levelSelectionButton: {fileID: 1144586844}
   exitButton: {fileID: 258242923}
@@ -2407,6 +2408,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6442037570064913322, guid: 699db7feb50542643a835d3c9245c71f, type: 3}
+      propertyPath: UIMessage
+      value: 
+      objectReference: {fileID: 1697546212}
     - target: {fileID: 6442037570064913322, guid: 699db7feb50542643a835d3c9245c71f, type: 3}
       propertyPath: isSinglePlayerOverride
       value: 1

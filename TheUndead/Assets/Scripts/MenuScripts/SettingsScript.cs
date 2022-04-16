@@ -46,6 +46,9 @@ public class SettingsScript : MonoBehaviour
             }
         }
 
+        _resolution.height = Screen.height;
+        _resolution.width = Screen.width;
+
         resolutionUpButton.onClick.AddListener(delegate { ResolutionButtonUpClick(); });
         resolutionDownButton.onClick.AddListener((delegate { ResolutionButtonDownClick(); }));
         windowedDownButton.onClick.AddListener((delegate { WindowDownButtonClick(); }));
@@ -166,7 +169,8 @@ public class SettingsScript : MonoBehaviour
     /// </summary>
     void SubmitValues()
     {
-        Screen.SetResolution(_resolution.width, _resolution.height, !isWindowed);
+        if(isWindowed) Screen.SetResolution(_resolution.width, _resolution.height, FullScreenMode.Windowed);
+        else Screen.SetResolution(_resolution.width, _resolution.height, FullScreenMode.ExclusiveFullScreen);
         SceneManager.LoadSceneAsync("MainMenu");
     }
 }

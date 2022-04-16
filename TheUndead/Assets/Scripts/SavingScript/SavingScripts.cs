@@ -81,6 +81,7 @@ public class SavingScripts
     /// </summary>
     public String SaveLevel()
     {
+        CreateDirectoryIfDoesNotExist();
         string levelFilename = PlayerPrefs.GetString("currentLevel", "unknown") + "_save_file";
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -147,10 +148,10 @@ public class SavingScripts
     /// </summary>
     public String LoadSaveFile()
     {
+        CreateDirectoryIfDoesNotExist();
         string levelFilename = PlayerPrefs.GetString("currentLevel", "unknown") + "_save_file";
 
         String fileName = Application.dataPath + "/Saves/" + levelFilename;
-
         if (!System.IO.File.Exists(fileName))
         {
             return "No Save File.";
@@ -191,6 +192,12 @@ public class SavingScripts
         return "LOADED GAME!";
 
 
+    }
+
+    private void CreateDirectoryIfDoesNotExist()
+    {
+        System.IO.FileInfo file = new System.IO.FileInfo(Application.dataPath + "/Saves/");
+        file.Directory.Create();
     }
 
 }
